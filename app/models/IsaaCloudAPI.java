@@ -7,7 +7,9 @@ import com.isaacloud.sdk.Isaacloud;
 
 public class IsaaCloudAPI {
 
-	public Isaacloud isaac;
+	public String userEmail = "xxx";
+
+	private Isaacloud isaac;
 
 	public IsaaCloudAPI() {
 		Map<String, String> config = new HashMap<>();

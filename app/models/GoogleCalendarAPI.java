@@ -34,7 +34,7 @@ public class GoogleCalendarAPI {
 	private static final JsonFactory JSON_FACTORY = JacksonFactory
 			.getDefaultInstance();
 
-	private static com.google.api.services.calendar.Calendar client;
+	public com.google.api.services.calendar.Calendar service;
 
 	static final java.util.List<Calendar> addedCalendarsUsingBatch = Lists
 			.newArrayList();
@@ -61,20 +61,13 @@ public class GoogleCalendarAPI {
 
 			Credential credential = authorize();
 
-			client = new com.google.api.services.calendar.Calendar.Builder(
+			service = new com.google.api.services.calendar.Calendar.Builder(
 					httpTransport, JSON_FACTORY, credential)
 					.setApplicationName(APPLICATION_NAME).build();
 
-			soiCalendar = new SOICalendar(client);
+			soiCalendar = new SOICalendar(service);
 		} catch (IOException e) {
 		} catch (Throwable t) {
 		}
 	}
-
-	public String tempMessage() {
-		// functions to handle Calendar etc
-		// soiCalendar.checkCalendarMeetings(client);
-		return "Response from google Calendar";
-	}
-
 }
