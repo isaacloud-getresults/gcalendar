@@ -9,18 +9,34 @@ import views.html.index;
 public class Application extends Controller {
 
 	public static Result index() {
+		return ok(index.render("Your new application is ready"));
+	}
 
-		// INITIALIZATION
-		IsaaCloudAPI isaa = new IsaaCloudAPI();
+	public static Result deleteEvent() {
 		GoogleCalendarAPI calendar = new GoogleCalendarAPI();
-
-		// FUNCTION TEST
+		IsaaCloudAPI isaa = new IsaaCloudAPI();
 
 		calendar.soiCalendar.getDeleteEvent(calendar.service);
+		isaa.addPointsForDelete(calendar.soiCalendar.emailToGivePoints,
+				calendar.soiCalendar.timeToGivePoints);
 
-		boolean x = calendar.soiCalendar.checkCalendarMeetings(
-				calendar.service, isaa.userEmail);
+		return ok("ok");
+	}
 
-		return ok(index.render("Your new application is "));
+	public static Result meetingCheck() {
+		GoogleCalendarAPI calendar = new GoogleCalendarAPI();
+		IsaaCloudAPI isaa = new IsaaCloudAPI();
+
+		// dostaje skądś maila (ISAACLOUD) że pojawił się w meeting room.
+		String userEmail = "mnowicki@sosoftware.pl";
+		//
+		//
+
+		if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
+				userEmail)) {
+			isaa.addPointsForAttendance(userEmail);
+		}
+
+		return ok("ok");
 	}
 }

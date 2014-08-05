@@ -20,6 +20,9 @@ public class SOICalendar {
 
 	public SOICalendar(com.google.api.services.calendar.Calendar service) {
 		// utworzyc czas synchronizacji gdzieś musi być zapisany. gdzie????
+		//
+		//
+		//
 	}
 
 	public void getDeleteEvent(com.google.api.services.calendar.Calendar service) {
@@ -65,14 +68,18 @@ public class SOICalendar {
 			List<Event> myEvents = events.getItems();
 			for (Event event : myEvents) {
 				if (event.getLocation() != null && event.getAttendees() != null) {
-					long time = 0 + event.getStart().getDateTime().getValue()
+					long time = event.getStart().getDateTime().getValue()
 							- new Date().getTime();
 					// 10 minutes = 600 000 milliseconds
 					if (time < 600000 && time > 0
-							&& event.getLocation().equals("Meeting room")) {
+							&& event.getLocation().equals("Meeting room")
+							&& event.getStatus().equals("confirmed")) {
 						for (int i = 0; i < event.getAttendees().size(); i++) {
 							if (event.getAttendees().get(i).getEmail()
-									.equals(attendeeEmail)) {
+									.equals(attendeeEmail)
+									&& event.getAttendees().get(i)
+											.getResponseStatus()
+											.equals("accepted")) {
 								return true;
 							}
 						}
