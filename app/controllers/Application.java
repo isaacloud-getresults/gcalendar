@@ -1,7 +1,10 @@
 package controllers;
 
+import java.util.ArrayList;
+
 import models.GoogleCalendarAPI;
 import models.IsaaCloudAPI;
+import models.Users;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
@@ -38,5 +41,27 @@ public class Application extends Controller {
 		}
 
 		return ok("ok");
+	}
+
+	public static Result meetingBoard() {
+		GoogleCalendarAPI calendar = new GoogleCalendarAPI();
+		IsaaCloudAPI isaa = new IsaaCloudAPI();
+
+		ArrayList<Users> usersList = calendar.soiCalendar
+				.putUserEmails(calendar.service);
+
+		String xx = "";
+
+		for (int i = 0; i < usersList.size(); i++) {
+			isaa.putUserInfo(usersList, i);
+			usersList.get(i).calculateStatus();
+			xx += usersList.get(i).userFirstName + " ";
+			xx += usersList.get(i).userLastName + " is in ";
+			xx += usersList.get(i).userPlace + "	- ";
+
+			xx += usersList.get(i).userStatus + "\n";
+		}
+
+		return ok("" + xx);
 	}
 }

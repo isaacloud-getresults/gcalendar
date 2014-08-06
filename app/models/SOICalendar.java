@@ -1,6 +1,7 @@
 package models;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -91,5 +92,41 @@ public class SOICalendar {
 					null, ex);
 		}
 		return false;
+	}
+
+	public ArrayList<Users> putUserEmails(
+			com.google.api.services.calendar.Calendar service) {
+		ArrayList<Users> usersList = new ArrayList<Users>();
+		String pageToken = null;
+		try {
+			/*
+			 * GET ALL EVENTS, CHECK IF THERE IS SOME THAT TIME IS BEETWEN 10min
+			 * AND 0 AND IS IN MEETING ROOM, CHECK IF USER IS AN ATTENDEE AND
+			 * RETURN TRUE IF ALL CONDITIONS ALL TRUE
+			 */
+			Events events = service.events().list("primary")
+					.setPageToken(pageToken).execute();
+			List<Event> myEvents = events.getItems();
+			for (Event event : myEvents) {
+				long timeStart = event.getStart().getDateTime().getValue()
+						- new Date().getTime();
+				long timeEnd = event.getEnd().getDateTime().getValue()
+						- new Date().getTime();
+				// 10 minutes = 600 000 milliseconds
+				if (timeStart < 600000 && timeEnd > 0
+						&& event.getLocation().equals("Meeting room")) {
+					for (int i = 0; i < event.getAttendees().size(); i++) {
+						Users user = new Users();
+						user.userEmail = event.getAttendees().get(i).getEmail();
+						user.time = event.getStart().getDateTime().getValue();
+						usersList.add(user);
+					}
+				}
+			}
+		} catch (IOException ex) {
+			Logger.getLogger(SOICalendar.class.getName()).log(Level.SEVERE,
+					null, ex);
+		}
+		return usersList;
 	}
 }

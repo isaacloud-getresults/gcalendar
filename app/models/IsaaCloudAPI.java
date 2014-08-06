@@ -1,6 +1,7 @@
 package models;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
@@ -64,4 +65,40 @@ public class IsaaCloudAPI {
 		}
 	}
 
+	public void putUserInfo(ArrayList<Users> usersList, int idAL) {
+		try {
+			SortedMap<String, String> query = new TreeMap<>();
+			query.put("email", usersList.get(idAL).userEmail);
+			JSONArray users = (JSONArray) isaac.path("/cache/users")
+					.withQuery(query).get().getJson();
+
+			if (!users.isEmpty()) {
+				usersList.get(idAL).userFirstName = ((JSONObject) users.get(0))
+						.get("firstName").toString();
+				usersList.get(idAL).userLastName = ((JSONObject) users.get(0))
+						.get("lastName").toString();
+
+				JSONArray counters = (JSONArray) ((JSONObject) users.get(0))
+						.get("counterValues");
+				if (!counters.isEmpty())
+					for (int i = 0; i < counters.size(); i++) {
+						if (((JSONObject) counters.get(i)).get("counter")
+								.toString().equals("1")) {
+							int groupId = Integer
+									.parseInt(((JSONObject) counters.get(i))
+											.get("value").toString());
+							JSONObject group = (JSONObject) isaac
+									.path("/cache/users/groups/" + groupId)
+									.get().getJson();
+
+							usersList.get(idAL).userPlace = group.get("label")
+									.toString();
+						}
+					}
+			}
+
+		} catch (IOException e) {
+		} catch (IsaacloudConnectionException e) {
+		}
+	}
 }
