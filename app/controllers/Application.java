@@ -59,4 +59,14 @@ public class Application extends Controller {
 
 		return ok("" + xx);
 	}
+	
+	public static Result a(){
+		
+		return ok("a");
+	}
+	
+	public static Result b(){
+		
+		return ok("b");
+	}
 }
