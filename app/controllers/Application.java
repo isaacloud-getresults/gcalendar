@@ -78,12 +78,12 @@ public class Application extends Controller {
 					.setTransport(GoogleNetHttpTransport.newTrustedTransport())
 					.setJsonFactory(new GsonFactory())
 					.setServiceAccountId(
-							"338968387608-s82p0kk2e2utvki5lipbo19cg3c46eqv@developer.gserviceaccount.com")
+							"338968387608-tis8g8m1pb5lrvbe7578ga98ustigrps@developer.gserviceaccount.com")
 					.setServiceAccountScopes(
 							Arrays.asList("https://www.googleapis.com/auth/calendar"))
 					.setClientSecrets(
-							"338968387608-s82p0kk2e2utvki5lipbo19cg3c46eqv.apps.googleusercontent.com",
-							"iDGxLmcmJZ7mmRMCqEHWfx6d").build();
+							"338968387608-tis8g8m1pb5lrvbe7578ga98ustigrps.apps.googleusercontent.com",
+							"BdPouz_18JA1qIYsFp2PZ6tB").build();
 
 			com.google.api.services.calendar.Calendar service = new Calendar.Builder(
 					GoogleNetHttpTransport.newTrustedTransport(),
