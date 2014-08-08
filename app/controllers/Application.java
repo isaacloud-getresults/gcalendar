@@ -1,6 +1,5 @@
 package controllers;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -79,15 +78,12 @@ public class Application extends Controller {
 					.setTransport(GoogleNetHttpTransport.newTrustedTransport())
 					.setJsonFactory(new GsonFactory())
 					.setServiceAccountId(
-							"<service account email address>@developer.gserviceaccount.com")
+							"338968387608-s82p0kk2e2utvki5lipbo19cg3c46eqv@developer.gserviceaccount.com")
 					.setServiceAccountScopes(
 							Arrays.asList("https://www.googleapis.com/auth/calendar"))
-					.setServiceAccountPrivateKeyFromP12File(
-							new File(
-									"<private key for service account in P12 format>-privatekey.p12"))
-					.setServiceAccountUser(
-							"<domain user whose data you need>@yourdomain.com")
-					.build();
+					.setClientSecrets(
+							"338968387608-s82p0kk2e2utvki5lipbo19cg3c46eqv.apps.googleusercontent.com",
+							"iDGxLmcmJZ7mmRMCqEHWfx6d").build();
 
 			com.google.api.services.calendar.Calendar service = new Calendar.Builder(
 					GoogleNetHttpTransport.newTrustedTransport(),
