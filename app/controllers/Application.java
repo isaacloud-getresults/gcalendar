@@ -23,6 +23,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
+import com.google.api.services.calendar.model.Events;
 
 public class Application extends Controller {
 
@@ -118,6 +119,9 @@ public class Application extends Controller {
 					.setApplicationName(APPLICATION_NAME).build();
 
 			soiCalendar = new SOICalendar();
+			String pageToken = null;
+			Events events = service.events().list("primary")
+					.setPageToken(pageToken).execute();
 		} catch (IOException e) {
 		} catch (Throwable t) {
 		}
