@@ -149,12 +149,12 @@ public class Application extends Controller {
 					new InputStreamReader(GoogleCalendarAPI.class
 							.getResourceAsStream("/client_secrets.json")));
 
+			x += "asdsadsadasd";
+
 			GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
 					httpTransport, JSON_FACTORY, clientSecrets,
 					Collections.singleton(CalendarScopes.CALENDAR))
 					.setDataStoreFactory(dataStoreFactory).build();
-
-			x += "asdsadsadasd";
 
 			Credential credential = new AuthorizationCodeInstalledApp(flow,
 					new LocalServerReceiver()).authorize("user");
