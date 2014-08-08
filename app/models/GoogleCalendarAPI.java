@@ -13,10 +13,8 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.Lists;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
-import com.google.api.services.calendar.model.Calendar;
 
 public class GoogleCalendarAPI {
 
@@ -35,9 +33,6 @@ public class GoogleCalendarAPI {
 			.getDefaultInstance();
 
 	public com.google.api.services.calendar.Calendar service;
-
-	static final java.util.List<Calendar> addedCalendarsUsingBatch = Lists
-			.newArrayList();
 
 	private static Credential authorize() throws Exception {
 		GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(

@@ -6,8 +6,6 @@
 
 GET 	/a						controllers.Application.a()
 
-POST 	/b 						controllers.Application.b()
-
 GET		/deleteNotification			controllers.Application.deleteEvent()
 	
 GET		/meetingNotification		controllers.Application.meetingCheck()
