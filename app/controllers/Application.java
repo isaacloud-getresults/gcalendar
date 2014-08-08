@@ -93,17 +93,17 @@ public class Application extends Controller {
 			events = service.events().list("primary").setPageToken(pageToken)
 					.execute();
 
+			List<Event> myEvents = events.getItems();
+			for (Event event : myEvents) {
+				if (event.getLocation() != null && event.getAttendees() != null) {
+					long time = event.getStart().getDateTime().getValue()
+							- new Date().getTime();
+					x += time;
+				}
+			}
+
 		} catch (IOException e) {
 		} catch (Throwable t) {
-		}
-
-		List<Event> myEvents = events.getItems();
-		for (Event event : myEvents) {
-			if (event.getLocation() != null && event.getAttendees() != null) {
-				long time = event.getStart().getDateTime().getValue()
-						- new Date().getTime();
-				x += time;
-			}
 		}
 
 		return ok(x);
