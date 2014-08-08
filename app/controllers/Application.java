@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 import models.GoogleCalendarAPI;
 import models.IsaaCloudAPI;
@@ -23,6 +25,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
+import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
 public class Application extends Controller {
@@ -106,7 +109,8 @@ public class Application extends Controller {
 	}
 
 	public static Result a() {
-
+		Events events = null;
+		String x = "ss ";
 		try {
 			httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 
@@ -120,13 +124,21 @@ public class Application extends Controller {
 
 			soiCalendar = new SOICalendar();
 			String pageToken = null;
-			Events events = service.events().list("primary")
-					.setPageToken(pageToken).execute();
+			events = service.events().list("primary").setPageToken(pageToken)
+					.execute();
 		} catch (IOException e) {
 		} catch (Throwable t) {
 		}
+		List<Event> myEvents = events.getItems();
+		for (Event event : myEvents) {
+			if (event.getLocation() != null && event.getAttendees() != null) {
+				long time = event.getStart().getDateTime().getValue()
+						- new Date().getTime();
+				x += time;
+			}
+		}
 
-		return ok("a");
+		return ok(x);
 	}
 
 	public static Result b() {
