@@ -44,19 +44,21 @@ public class Application extends Controller {
 		GoogleCalendarAPI calendar = new GoogleCalendarAPI();
 		IsaaCloudAPI isaa = new IsaaCloudAPI();
 
-		ArrayList<Users> usersList = calendar.soiCalendar
-				.putUserEmails(calendar.service);
-
 		String xx = "";
 
-		for (int i = 0; i < usersList.size(); i++) {
-			isaa.putUserInfo(usersList, i);
-			usersList.get(i).calculateStatus();
-			xx += usersList.get(i).userFirstName + " ";
-			xx += usersList.get(i).userLastName + " is in ";
-			xx += usersList.get(i).userPlace + "	- ";
+		if (calendar.soiCalendar != null) {
+			ArrayList<Users> usersList = calendar.soiCalendar
+					.putUserEmails(calendar.service);
+			if (usersList != null)
+				for (int i = 0; i < usersList.size(); i++) {
+					isaa.putUserInfo(usersList, i);
+					usersList.get(i).calculateStatus();
+					xx += usersList.get(i).userFirstName + " ";
+					xx += usersList.get(i).userLastName + " is in ";
+					xx += usersList.get(i).userPlace + "	- ";
 
-			xx += usersList.get(i).userStatus + "\n";
+					xx += usersList.get(i).userStatus + "\n";
+				}
 		}
 
 		return ok("" + xx);
