@@ -14,10 +14,11 @@ public class Application extends Controller {
 		GoogleCalendarAPI calendar = new GoogleCalendarAPI();
 		IsaaCloudAPI isaa = new IsaaCloudAPI();
 
-		if(calendar != null && calendar.service != null)
-		calendar.soiCalendar.getDeleteEvent(calendar.service);
-		isaa.addPointsForDelete(calendar.soiCalendar.emailToGivePoints,
-				calendar.soiCalendar.timeToGivePoints);
+		if (calendar != null && calendar.service != null)
+			calendar.soiCalendar.getDeleteEvent(calendar.service);
+		if (calendar.soiCalendar != null)
+			isaa.addPointsForDelete(calendar.soiCalendar.emailToGivePoints,
+					calendar.soiCalendar.timeToGivePoints);
 
 		return ok("ok");
 	}
@@ -60,14 +61,14 @@ public class Application extends Controller {
 
 		return ok("" + xx);
 	}
-	
-	public static Result a(){
-		
+
+	public static Result a() {
+
 		return ok("a");
 	}
-	
-	public static Result b(){
-		
+
+	public static Result b() {
+
 		return ok("b");
 	}
 }
