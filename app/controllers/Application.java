@@ -14,6 +14,7 @@ public class Application extends Controller {
 		GoogleCalendarAPI calendar = new GoogleCalendarAPI();
 		IsaaCloudAPI isaa = new IsaaCloudAPI();
 
+		if(calendar != null && calendar.service != null)
 		calendar.soiCalendar.getDeleteEvent(calendar.service);
 		isaa.addPointsForDelete(calendar.soiCalendar.emailToGivePoints,
 				calendar.soiCalendar.timeToGivePoints);
