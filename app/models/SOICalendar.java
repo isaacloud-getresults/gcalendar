@@ -19,14 +19,12 @@ public class SOICalendar {
 
 	public List<Event> items;
 
-	public SOICalendar(com.google.api.services.calendar.Calendar service) {
+	public SOICalendar() {
 		// utworzyc czas synchronizacji gdzieś musi być zapisany. gdzie????
-		//
-		//
-		//
 	}
 
-	public void getDeleteEvent(com.google.api.services.calendar.Calendar service) {
+	public boolean getDeleteEvent(
+			com.google.api.services.calendar.Calendar service) {
 		String pageToken = null;
 		try {
 			/*
@@ -46,12 +44,15 @@ public class SOICalendar {
 					this.timeToGivePoints = event.getStart().getDateTime()
 							.getValue()
 							- new Date().getTime();
+					this.lastSynchronizationTime = newSynchronizationTime;
+					return true;
 				}
 			}
-			this.lastSynchronizationTime = newSynchronizationTime;
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	public boolean checkCalendarMeetings(

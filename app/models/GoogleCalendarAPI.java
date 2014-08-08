@@ -65,7 +65,7 @@ public class GoogleCalendarAPI {
 					httpTransport, JSON_FACTORY, credential)
 					.setApplicationName(APPLICATION_NAME).build();
 
-			soiCalendar = new SOICalendar(service);
+			soiCalendar = new SOICalendar();
 		} catch (IOException e) {
 		} catch (Throwable t) {
 		}

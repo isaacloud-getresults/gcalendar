@@ -14,9 +14,7 @@ public class Application extends Controller {
 		GoogleCalendarAPI calendar = new GoogleCalendarAPI();
 		IsaaCloudAPI isaa = new IsaaCloudAPI();
 
-		if (calendar != null && calendar.service != null)
-			calendar.soiCalendar.getDeleteEvent(calendar.service);
-		if (calendar.soiCalendar != null)
+		if (calendar.soiCalendar.getDeleteEvent(calendar.service))
 			isaa.addPointsForDelete(calendar.soiCalendar.emailToGivePoints,
 					calendar.soiCalendar.timeToGivePoints);
 
@@ -30,12 +28,10 @@ public class Application extends Controller {
 		// dostaje skądś maila (ISAACLOUD) że pojawił się w meeting room.
 		String userEmail = "mnowicki@sosoftware.pl";
 		//
-		//
 
-		// if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
-		// userEmail)) {
-		isaa.addPointsForAttendance(userEmail);
-		// }
+		if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
+				userEmail))
+			isaa.addPointsForAttendance(userEmail);
 
 		return ok("ok");
 	}
@@ -46,20 +42,18 @@ public class Application extends Controller {
 
 		String xx = "";
 
-		if (calendar.soiCalendar != null) {
-			ArrayList<Users> usersList = calendar.soiCalendar
-					.putUserEmails(calendar.service);
-			if (usersList != null)
-				for (int i = 0; i < usersList.size(); i++) {
-					isaa.putUserInfo(usersList, i);
-					usersList.get(i).calculateStatus();
-					xx += usersList.get(i).userFirstName + " ";
-					xx += usersList.get(i).userLastName + " is in ";
-					xx += usersList.get(i).userPlace + "	- ";
+		ArrayList<Users> usersList = calendar.soiCalendar
+				.putUserEmails(calendar.service);
+		if (usersList != null)
+			for (int i = 0; i < usersList.size(); i++) {
+				isaa.putUserInfo(usersList, i);
+				usersList.get(i).calculateStatus();
+				xx += usersList.get(i).userFirstName + " ";
+				xx += usersList.get(i).userLastName + " is in ";
+				xx += usersList.get(i).userPlace + "	- ";
 
-					xx += usersList.get(i).userStatus + "\n";
-				}
-		}
+				xx += usersList.get(i).userStatus + "\n";
+			}
 
 		return ok("" + xx);
 	}
