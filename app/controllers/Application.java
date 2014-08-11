@@ -150,7 +150,7 @@ public class Application extends Controller {
 			GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
 					JSON_FACTORY,
 					new InputStreamReader(GoogleCalendarAPI.class
-							.getResourceAsStream("/client_secrets.json")));
+							.getResourceAsStream("client_secrets.json")));
 			x += "2 ";
 			GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
 					httpTransport, JSON_FACTORY, clientSecrets,
