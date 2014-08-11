@@ -136,42 +136,40 @@ public class Application extends Controller {
 
 	public static Result b() {
 		Events events = null;
-		String x = "ss ";
+		String x = "0 ";
 
 		try {
 
 			httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 
 			dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
-
-			x += "asdsadsadasd";
-
+			x += "1 ";
 			GoogleClientSecrets clientSecrets = GoogleClientSecrets
 					.load(JSON_FACTORY,
 							new InputStreamReader(
 									GoogleCalendarAPI.class
-											.getResourceAsStream("home/gcalendar/client_secrets.json")));
-
+											.getResourceAsStream("/home/gcalendar/client_secrets.json")));
+			x += "2 ";
 			GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
 					httpTransport, JSON_FACTORY, clientSecrets,
 					Collections.singleton(CalendarScopes.CALENDAR))
 					.setDataStoreFactory(dataStoreFactory).build();
-
+			x += "3 ";
 			Credential credential = new AuthorizationCodeInstalledApp(flow,
 					new LocalServerReceiver()).authorize("user");
-
+			x += "4 ";
 			com.google.api.services.calendar.Calendar service = new com.google.api.services.calendar.Calendar.Builder(
 					httpTransport, JSON_FACTORY, credential)
 					.setApplicationName(APPLICATION_NAME).build();
-
+			x += "5 ";
 			String pageToken = null;
 			events = service.events().list("primary").setPageToken(pageToken)
 					.execute();
-
+			x += "6 ";
 			List<Event> myEvents = events.getItems();
-
+			x += "7 ";
 			for (Event event : myEvents) {
-
+				x += "8 ";
 				long time = event.getStart().getDateTime().getValue()
 						- new Date().getTime();
 				x += time;
