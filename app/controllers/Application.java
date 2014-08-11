@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,7 +17,6 @@ import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
@@ -143,20 +141,15 @@ public class Application extends Controller {
 			httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 
 			dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
-			x += "1 "
-					+ GoogleCalendarAPI.class.getProtectionDomain()
-							.getClassLoader()
-							.getResource("client_secrets.json");
+			x += "1 ";
 
-			GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
-					JSON_FACTORY,
-					new InputStreamReader(GoogleCalendarAPI.class
-							.getClassLoader().getResourceAsStream(
-									"client_secrets.json")));
 			x += "2 ";
 			GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-					httpTransport, JSON_FACTORY, clientSecrets,
-					Collections.singleton(CalendarScopes.CALENDAR))
+					httpTransport,
+					JSON_FACTORY,
+					"338968387608-575mgn8cejq5rhm1mj0353ne2naa5pr1.apps.googleusercontent.com",
+					"auINWlXFaZRFU3XTW8kS2y5m", Collections
+							.singleton(CalendarScopes.CALENDAR))
 					.setDataStoreFactory(dataStoreFactory).build();
 			x += "3 ";
 			Credential credential = new AuthorizationCodeInstalledApp(flow,
