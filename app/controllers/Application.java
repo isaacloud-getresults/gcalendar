@@ -145,12 +145,14 @@ public class Application extends Controller {
 			dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
 			x += "1 "
 					+ GoogleCalendarAPI.class.getProtectionDomain()
-							.getCodeSource().getLocation().getPath();
+							.getClassLoader()
+							.getResource("client_secrets.json");
 
 			GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
 					JSON_FACTORY,
 					new InputStreamReader(GoogleCalendarAPI.class
-							.getResourceAsStream("client_secrets.json")));
+							.getClassLoader().getResourceAsStream(
+									"client_secrets.json")));
 			x += "2 ";
 			GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
 					httpTransport, JSON_FACTORY, clientSecrets,
