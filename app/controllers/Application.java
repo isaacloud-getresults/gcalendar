@@ -1,33 +1,12 @@
 package controllers;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
 
 import models.GoogleCalendarAPI;
 import models.IsaaCloudAPI;
 import models.Users;
 import play.mvc.Controller;
 import play.mvc.Result;
-
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.gson.GsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.calendar.Calendar;
-import com.google.api.services.calendar.CalendarScopes;
-import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.Events;
 
 public class Application extends Controller {
 
@@ -79,103 +58,4 @@ public class Application extends Controller {
 		return ok("" + xx);
 	}
 
-	public static Result a() {
-		Events events = null;
-		String x = "ss ";
-
-		try {
-
-			GoogleCredential credential = new GoogleCredential.Builder()
-					.setTransport(GoogleNetHttpTransport.newTrustedTransport())
-					.setJsonFactory(new GsonFactory())
-					.setServiceAccountId(
-							"338968387608-tis8g8m1pb5lrvbe7578ga98ustigrps@developer.gserviceaccount.com")
-					.setServiceAccountScopes(
-							Arrays.asList("https://www.googleapis.com/auth/calendar"))
-					.setClientSecrets(
-							"338968387608-tis8g8m1pb5lrvbe7578ga98ustigrps.apps.googleusercontent.com",
-							"BdPouz_18JA1qIYsFp2PZ6tB").build();
-			x += "asdsadsadasd";
-			com.google.api.services.calendar.Calendar service = new Calendar.Builder(
-					GoogleNetHttpTransport.newTrustedTransport(),
-					new GsonFactory(), credential).build();
-
-			String pageToken = null;
-			events = service.events().list("primary").setPageToken(pageToken)
-					.execute();
-
-			List<Event> myEvents = events.getItems();
-
-			for (Event event : myEvents) {
-
-				long time = event.getStart().getDateTime().getValue()
-						- new Date().getTime();
-				x += time;
-			}
-
-		} catch (IOException e) {
-		} catch (Throwable t) {
-		}
-
-		return ok(x);
-	}
-
-	private static final String APPLICATION_NAME = "SOI Calendar";
-
-	private static final java.io.File DATA_STORE_DIR = new java.io.File(
-			System.getProperty("user.home"), ".store/Calendars");
-
-	private static FileDataStoreFactory dataStoreFactory;
-
-	private static HttpTransport httpTransport;
-
-	private static final JsonFactory JSON_FACTORY = JacksonFactory
-			.getDefaultInstance();
-
-	public static Result b() {
-		Events events = null;
-		String x = "0 ";
-
-		try {
-
-			httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-
-			dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
-			x += "1 ";
-
-			x += "2 ";
-			GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-					httpTransport,
-					JSON_FACTORY,
-					"338968387608-575mgn8cejq5rhm1mj0353ne2naa5pr1.apps.googleusercontent.com",
-					"auINWlXFaZRFU3XTW8kS2y5m", Collections
-							.singleton(CalendarScopes.CALENDAR))
-					.setDataStoreFactory(dataStoreFactory).build();
-			x += "3 ";
-			Credential credential = new AuthorizationCodeInstalledApp(flow,
-					new LocalServerReceiver()).authorize("user");
-			x += "4 ";
-			com.google.api.services.calendar.Calendar service = new com.google.api.services.calendar.Calendar.Builder(
-					httpTransport, JSON_FACTORY, credential)
-					.setApplicationName(APPLICATION_NAME).build();
-			x += "5 ";
-			String pageToken = null;
-			events = service.events().list("primary").setPageToken(pageToken)
-					.execute();
-			x += "6 ";
-			List<Event> myEvents = events.getItems();
-			x += "7 ";
-			for (Event event : myEvents) {
-				x += "8 ";
-				long time = event.getStart().getDateTime().getValue()
-						- new Date().getTime();
-				x += time;
-			}
-
-		} catch (IOException e) {
-		} catch (Throwable t) {
-		}
-
-		return ok(x);
-	}
 }

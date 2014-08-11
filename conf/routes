@@ -4,15 +4,11 @@
 
 # Home page
 
-GET 	/a						controllers.Application.a()
-
 GET		/deleteNotification			controllers.Application.deleteEvent()
 	
 GET		/meetingNotification		controllers.Application.meetingCheck()
 
 GET		/meetingBoard				controllers.Application.meetingBoard()
-
-GET 	/b						controllers.Application.b()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
