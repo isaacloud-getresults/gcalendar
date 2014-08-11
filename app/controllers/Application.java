@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -143,12 +144,14 @@ public class Application extends Controller {
 			httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 
 			dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
-			x += "1 ";
-			GoogleClientSecrets clientSecrets = GoogleClientSecrets
-					.load(JSON_FACTORY,
-							new InputStreamReader(
-									GoogleCalendarAPI.class
-											.getResourceAsStream("/home/gcalendar/client_secrets.json")));
+			URL rd = GoogleCalendarAPI.class.getClassLoader().getResource(
+					"client_secrets.json");
+			x += "1 " + rd.getPath();
+
+			GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
+					JSON_FACTORY,
+					new InputStreamReader(GoogleCalendarAPI.class
+							.getResourceAsStream("/client_secrets.json")));
 			x += "2 ";
 			GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
 					httpTransport, JSON_FACTORY, clientSecrets,
