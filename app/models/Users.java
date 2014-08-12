@@ -10,21 +10,22 @@ public class Users {
 	public String userLastName = "noInDatabase";
 	public String userPlace = "noInDatabase";
 	public String userStatus = "unaviable";
+	public String userInfo = "";
 	public long time;
 
 	public void calculateStatus() {
 		switch (this.userPlace) {
 		case "Meeting Room": {
-			this.userStatus = "PRESENT;";
+			this.userStatus = "PRESENT";
 			break;
 		}
 		case "Kitchen": {
 			long time = (this.time - new Date().getTime() - 300000);
 			String prefix = "";
 			if (time < 0)
-				prefix = " LATE;";
+				prefix = " LATE";
 			else
-				prefix = " TO GO;";
+				prefix = " TO GO";
 			time = Math.abs(time);
 			this.userStatus = ""
 					+ TimeUnit.MILLISECONDS.toMinutes(time)
@@ -36,7 +37,7 @@ public class Users {
 			break;
 		}
 		default: {
-			this.userStatus = "UNAVAILABLE;";
+			this.userStatus = "UNAVAILABLE";
 			break;
 		}
 

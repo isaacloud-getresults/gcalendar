@@ -121,6 +121,8 @@ public class SOICalendar {
 						user.userEmail = event.getAttendees().get(i).getEmail();
 						user.time = event.getStart().getDateTime().getValue();
 						usersList.add(user);
+						user.userInfo = event.getAttendees().get(i)
+								.getResponseStatus();
 					}
 				}
 			}

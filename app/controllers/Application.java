@@ -49,7 +49,8 @@ public class Application extends Controller {
 				isaa.putUserInfo(usersList, i);
 				usersList.get(i).calculateStatus();
 				xx += usersList.get(i).ID + ", ";
-				xx += usersList.get(i).userStatus + "\n";
+				xx += usersList.get(i).userStatus + ", ";
+				xx += usersList.get(i).userInfo + ";\n";
 			}
 
 		return ok("" + xx);
