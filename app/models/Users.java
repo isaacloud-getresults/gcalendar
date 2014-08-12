@@ -16,16 +16,16 @@ public class Users {
 	public void calculateStatus() {
 		switch (this.userPlace) {
 		case "Meeting Room": {
-			this.userStatus = "PRESENT";
+			this.userStatus = "present";
 			break;
 		}
 		case "Kitchen": {
 			long time = (this.time - new Date().getTime() - 300000);
 			String prefix = "";
 			if (time < 0)
-				prefix = " LATE";
+				prefix = " late";
 			else
-				prefix = " TO GO";
+				prefix = " to go";
 			time = Math.abs(time);
 			this.userStatus = ""
 					+ TimeUnit.MILLISECONDS.toMinutes(time)
@@ -37,7 +37,7 @@ public class Users {
 			break;
 		}
 		default: {
-			this.userStatus = "UNAVAILABLE";
+			this.userStatus = "unavailable";
 			break;
 		}
 
