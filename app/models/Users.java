@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class Users {
+	public String ID;
 	public String userEmail = "noInDatabase";
 	public String userFirstName = "noInDatabase";
 	public String userLastName = "noInDatabase";
@@ -14,18 +15,18 @@ public class Users {
 	public void calculateStatus() {
 		switch (this.userPlace) {
 		case "Meeting Room": {
-			this.userStatus = "OK";
+			this.userStatus = "[PRESENT]";
 			break;
 		}
 		case "Kitchen": {
 			long time = (this.time - new Date().getTime() - 300000);
 			String prefix = "";
 			if (time < 0)
-				prefix = " late";
+				prefix = " LATE]";
 			else
-				prefix = " to go";
+				prefix = " TO GO]";
 			time = Math.abs(time);
-			this.userStatus = ""
+			this.userStatus = "["
 					+ TimeUnit.MILLISECONDS.toMinutes(time)
 					+ "min "
 					+ (TimeUnit.MILLISECONDS.toSeconds(time)

@@ -48,10 +48,7 @@ public class Application extends Controller {
 			for (int i = 0; i < usersList.size(); i++) {
 				isaa.putUserInfo(usersList, i);
 				usersList.get(i).calculateStatus();
-				xx += usersList.get(i).userFirstName + " ";
-				xx += usersList.get(i).userLastName + " is in ";
-				xx += usersList.get(i).userPlace + "	- ";
-
+				xx += usersList.get(i).ID + "\t";
 				xx += usersList.get(i).userStatus + "\n";
 			}
 

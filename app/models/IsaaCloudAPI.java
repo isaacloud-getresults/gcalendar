@@ -73,6 +73,8 @@ public class IsaaCloudAPI {
 					.withQuery(query).get().getJson();
 
 			if (!users.isEmpty()) {
+				usersList.get(idAL).ID = ((JSONObject) users.get(0)).get("id")
+						.toString();
 				usersList.get(idAL).userFirstName = ((JSONObject) users.get(0))
 						.get("firstName").toString();
 				usersList.get(idAL).userLastName = ((JSONObject) users.get(0))
