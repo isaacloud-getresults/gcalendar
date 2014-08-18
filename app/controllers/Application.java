@@ -27,11 +27,11 @@ public class Application extends Controller {
 
 		// dostaje skądś maila (ISAACLOUD) że pojawił się w meeting room.
 		String a = "" + ctx().request().queryString().get("email");
-		String userEmail = "";
+		String userEmail = "" + a;
 
 		// if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
 		// userEmail))
-		userEmail = "mnowicki@sosoftware.pl";
+		// userEmail = "mnowicki@sosoftware.pl";
 		isaa.addPointsForAttendance(userEmail);
 
 		return ok("ok");
