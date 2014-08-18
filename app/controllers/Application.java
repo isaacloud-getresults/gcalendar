@@ -32,8 +32,7 @@ public class Application extends Controller {
 		// dostaje skądś maila (ISAACLOUD) że pojawił się w meeting room.
 
 		String userEmail = ""
-				+ request().body().asMultipartFormData().getFile("email")
-						.getKey();
+				+ request().body().asFormUrlEncoded().get("email").toString();
 
 		//
 
@@ -41,7 +40,7 @@ public class Application extends Controller {
 		// userEmail))
 		isaa.addPointsForAttendance(userEmail);
 
-		return ok("ok" + userEmail);
+		return ok("ok");
 	}
 
 	public static Result meetingBoard() {
