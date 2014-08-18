@@ -28,14 +28,16 @@ public class Application extends Controller {
 
 		Map<String, String[]> formData = request().body().asFormUrlEncoded();
 		// dostaje skądś maila (ISAACLOUD) że pojawił się w meeting room.
-		String userEmail = formData.get("email").toString();
+		String userEmail = "";
+		if (formData != null)
+			userEmail = formData.toString();
 		//
 
 		// if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
 		// userEmail))
 		// isaa.addPointsForAttendance(userEmail);
 
-		return ok("ok");
+		return ok("ok" + userEmail);
 	}
 
 	public static Result meetingBoard() {

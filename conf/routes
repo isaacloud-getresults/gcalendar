@@ -6,7 +6,7 @@
 
 GET		/deleteNotification			controllers.Application.deleteEvent()
 	
-POST		/meetingNotification		controllers.Application.meetingCheck()
+GET		/meetingNotification		controllers.Application.meetingCheck()
 
 GET		/meetingBoard				controllers.Application.meetingBoard()
 
