@@ -5,8 +5,8 @@
 # Home page
 
 GET		/deleteNotification			controllers.Application.deleteEvent()
-	
-GET		/meetingNotification		controllers.Application.meetingCheck()
+
+POST		/meetingNotification		controllers.Application.meetingCheck()
 
 GET		/meetingBoard				controllers.Application.meetingBoard()
 

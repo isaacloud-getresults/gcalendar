@@ -1,11 +1,12 @@
 package controllers;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import models.GoogleCalendarAPI;
 import models.IsaaCloudAPI;
 import models.Users;
+import play.data.DynamicForm;
+import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -26,16 +27,16 @@ public class Application extends Controller {
 		GoogleCalendarAPI calendar = new GoogleCalendarAPI();
 		IsaaCloudAPI isaa = new IsaaCloudAPI();
 
-		Map<String, String[]> formData = request().body().asFormUrlEncoded();
+		DynamicForm requestData = Form.form().bindFromRequest();
+
 		// dostaje skądś maila (ISAACLOUD) że pojawił się w meeting room.
-		String userEmail = "";
-		if (formData != null)
-			userEmail = formData.toString();
+		String userEmail = requestData.get("email");
+
 		//
 
 		// if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
 		// userEmail))
-		// isaa.addPointsForAttendance(userEmail);
+		isaa.addPointsForAttendance(userEmail);
 
 		return ok("ok" + userEmail);
 	}
