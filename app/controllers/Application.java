@@ -26,13 +26,13 @@ public class Application extends Controller {
 		IsaaCloudAPI isaa = new IsaaCloudAPI();
 
 		// dostaje skądś maila (ISAACLOUD) że pojawił się w meeting room.
-		String a = "" + ctx().request().body().asJson().get("email");
-		String userEmail = "" + a;
+		String a = "x " + ctx().request().body().asJson().get("email");
+		String userEmail = "";
 
 		// if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
 		// userEmail))
-		// userEmail = "mnowicki@sosoftware.pl";
-		isaa.addPointsForAttendance(userEmail);
+		userEmail = "mnowicki@sosoftware.pl";
+		isaa.addPointsForAttendance(userEmail, a);
 
 		return ok("ok");
 	}
