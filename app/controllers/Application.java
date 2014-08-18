@@ -31,6 +31,7 @@ public class Application extends Controller {
 
 		// if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
 		// userEmail))
+		userEmail = "mnowicki@gmail.com";
 		isaa.addPointsForAttendance(userEmail);
 
 		return ok("ok");
