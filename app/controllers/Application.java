@@ -27,7 +27,7 @@ public class Application extends Controller {
 
 		// dostaje skądś maila (ISAACLOUD) że pojawił się w meeting room.
 		String a = ""
-				+ request().body().asJson().get("body").get("email").toString();
+				+ request().body().asJson().get("body").get("email").asText();
 
 		String userEmail = "mnowicki@sosoftware.pl";
 
