@@ -30,7 +30,10 @@ public class Application extends Controller {
 		DynamicForm requestData = Form.form().bindFromRequest();
 
 		// dostaje skądś maila (ISAACLOUD) że pojawił się w meeting room.
-		String userEmail = requestData.get("email");
+
+		String userEmail = "";
+		if (requestData != null)
+			userEmail = requestData.get("email");
 
 		//
 
