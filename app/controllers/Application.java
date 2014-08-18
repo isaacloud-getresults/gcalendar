@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import models.GoogleCalendarAPI;
 import models.IsaaCloudAPI;
 import models.Users;
-import play.data.DynamicForm;
-import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -27,14 +25,10 @@ public class Application extends Controller {
 		GoogleCalendarAPI calendar = new GoogleCalendarAPI();
 		IsaaCloudAPI isaa = new IsaaCloudAPI();
 
-		DynamicForm requestData = Form.form().bindFromRequest();
-
 		// dostaje skądś maila (ISAACLOUD) że pojawił się w meeting room.
 
 		String userEmail = ""
 				+ request().body().asFormUrlEncoded().get("email").toString();
-
-		//
 
 		// if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
 		// userEmail))
