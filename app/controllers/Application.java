@@ -26,7 +26,7 @@ public class Application extends Controller {
 		IsaaCloudAPI isaa = new IsaaCloudAPI();
 
 		// dostaje skądś maila (ISAACLOUD) że pojawił się w meeting room.
-		String a = "x " + request().queryString().toString();
+		String a = "x " + response().toString();
 		String userEmail = "";
 
 		// if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
