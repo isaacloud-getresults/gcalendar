@@ -26,7 +26,8 @@ public class Application extends Controller {
 		IsaaCloudAPI isaa = new IsaaCloudAPI();
 
 		// dostaje skądś maila (ISAACLOUD) że pojawił się w meeting room.
-		String a = "x " + request().body().asJson().get("body").toString();
+		String a = ""
+				+ request().body().asJson().get("body").get("email").toString();
 
 		String userEmail = "mnowicki@sosoftware.pl";
 
