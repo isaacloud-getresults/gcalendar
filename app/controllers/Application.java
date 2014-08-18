@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import models.GoogleCalendarAPI;
 import models.IsaaCloudAPI;
@@ -25,13 +26,14 @@ public class Application extends Controller {
 		GoogleCalendarAPI calendar = new GoogleCalendarAPI();
 		IsaaCloudAPI isaa = new IsaaCloudAPI();
 
+		Map<String, String[]> formData = request().body().asFormUrlEncoded();
 		// dostaje skądś maila (ISAACLOUD) że pojawił się w meeting room.
-		String userEmail = "mnowicki@sosoftware.pl";
+		String userEmail = formData.get("email")[0];
 		//
 
-		if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
-				userEmail))
-			isaa.addPointsForAttendance(userEmail);
+		// if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
+		// userEmail))
+		isaa.addPointsForAttendance(userEmail);
 
 		return ok("ok");
 	}

@@ -75,10 +75,12 @@ public class IsaaCloudAPI {
 			if (!users.isEmpty()) {
 				usersList.get(idAL).ID = ((JSONObject) users.get(0)).get("id")
 						.toString();
-				usersList.get(idAL).userFirstName = ((JSONObject) users.get(0))
-						.get("firstName").toString();
-				usersList.get(idAL).userLastName = ((JSONObject) users.get(0))
-						.get("lastName").toString();
+				// usersList.get(idAL).userFirstName = ((JSONObject)
+				// users.get(0))
+				// .get("firstName").toString();
+				// usersList.get(idAL).userLastName = ((JSONObject)
+				// users.get(0))
+				// .get("lastName").toString();
 
 				JSONArray counters = (JSONArray) ((JSONObject) users.get(0))
 						.get("counterValues");
