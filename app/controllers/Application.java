@@ -31,9 +31,9 @@ public class Application extends Controller {
 
 		// dostaje skądś maila (ISAACLOUD) że pojawił się w meeting room.
 
-		String userEmail = "";
-		if (requestData != null)
-			userEmail = requestData.get("email");
+		String userEmail = ""
+				+ request().body().asMultipartFormData().getFile("email")
+						.getKey();
 
 		//
 
