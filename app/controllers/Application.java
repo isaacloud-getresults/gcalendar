@@ -28,7 +28,7 @@ public class Application extends Controller {
 
 		Map<String, String[]> formData = request().body().asFormUrlEncoded();
 		// dostaje skądś maila (ISAACLOUD) że pojawił się w meeting room.
-		// String userEmail = formData.get("email")[0];
+		String userEmail = formData.get("email").toString();
 		//
 
 		// if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
