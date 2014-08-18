@@ -59,10 +59,11 @@ public class IsaaCloudAPI {
 			query.put("email", userEmail);
 			JSONArray users = (JSONArray) isaac.path("/cache/users")
 					.withQuery(query).withFields("id").get().getJson();
-
-			int id = Integer.parseInt(((JSONObject) users.get(0)).get("id")
-					.toString());
-			isaac.event(id, "USER", "PRIORITY_NORMAL", 1, "NORMAL", body);
+			if (!users.isEmpty()) {
+				int id = Integer.parseInt(((JSONObject) users.get(0)).get("id")
+						.toString());
+				isaac.event(id, "USER", "PRIORITY_NORMAL", 1, "NORMAL", body);
+			}
 		} catch (IOException e) {
 		} catch (IsaacloudConnectionException e) {
 		}
