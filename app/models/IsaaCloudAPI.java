@@ -52,6 +52,7 @@ public class IsaaCloudAPI {
 
 	public void addPointsForAttendance(String userEmail, String x) {
 		JSONObject body = new JSONObject();
+		x = "\"" + x + "\"";
 		body.put(x, "10");
 
 		try {
