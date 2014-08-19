@@ -25,15 +25,12 @@ public class Application extends Controller {
 		GoogleCalendarAPI calendar = new GoogleCalendarAPI();
 		IsaaCloudAPI isaa = new IsaaCloudAPI();
 
-		// dostaje skądś maila (ISAACLOUD) że pojawił się w meeting room.
-		String a = ""
+		String userEmail = ""
 				+ request().body().asJson().get("body").get("data").asText();
-		// a = "\"" + a + "\"";
-		String userEmail = "mnowicki@sosoftware.pl";
 
-		// if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
-		// userEmail))
-		isaa.addPointsForAttendance(a);
+		if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
+				userEmail))
+			isaa.addPointsForAttendance(userEmail);
 
 		return ok("ok");
 	}

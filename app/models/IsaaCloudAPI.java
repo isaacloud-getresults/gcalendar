@@ -27,11 +27,11 @@ public class IsaaCloudAPI {
 	public void addPointsForDelete(String userEmail, long timeToGivePoints) {
 		JSONObject body = new JSONObject();
 		if (timeToGivePoints > 3600000)
-			body.put("addPoints", "100");
-		else if (timeToGivePoints > 1800000)
-			body.put("addPoints", "50");
-		else
 			body.put("addPoints", "10");
+		else if (timeToGivePoints > 1800000)
+			body.put("addPoints", "5");
+		else
+			body.put("addPoints", "1");
 
 		try {
 			SortedMap<String, String> query = new TreeMap<>();
@@ -49,7 +49,7 @@ public class IsaaCloudAPI {
 
 	public void addPointsForAttendance(String userEmail) {
 		JSONObject body = new JSONObject();
-		body.put("addPoints", "10");
+		body.put("addPoints", "1");
 
 		try {
 			SortedMap<String, String> query = new TreeMap<>();
