@@ -19,6 +19,7 @@ public class SOICalendar {
 
 	public SOICalendar() {
 		// SYNC TIME
+		this.lastSynchronizationTime = new DateTime(new Date());
 	}
 
 	public boolean getDeleteEvent(

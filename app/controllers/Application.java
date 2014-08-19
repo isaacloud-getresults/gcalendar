@@ -14,9 +14,6 @@ public class Application extends Controller {
 	public static IsaaCloudAPI isaa = new IsaaCloudAPI();
 
 	public static Result deleteEvent() {
-		// GoogleCalendarAPI calendar = new GoogleCalendarAPI();
-		// IsaaCloudAPI isaa = new IsaaCloudAPI();
-
 		if (calendar.soiCalendar.getDeleteEvent(calendar.service))
 			isaa.addPointsForDelete(calendar.soiCalendar.emailToGivePoints,
 					calendar.soiCalendar.timeToGivePoints);
@@ -25,9 +22,6 @@ public class Application extends Controller {
 	}
 
 	public static Result meetingCheck() {
-		// GoogleCalendarAPI calendar = new GoogleCalendarAPI();
-		// IsaaCloudAPI isaa = new IsaaCloudAPI();
-
 		String userEmail = ""
 				+ request().body().asJson().get("body").get("data").asText();
 
@@ -39,10 +33,7 @@ public class Application extends Controller {
 	}
 
 	public static Result meetingBoard() {
-		// GoogleCalendarAPI calendar = new GoogleCalendarAPI();
-		// IsaaCloudAPI isaa = new IsaaCloudAPI();
-
-		String xx = "";
+		String board = "";
 
 		ArrayList<Users> usersList = calendar.soiCalendar
 				.putUserEmails(calendar.service);
@@ -50,12 +41,12 @@ public class Application extends Controller {
 			for (int i = 0; i < usersList.size(); i++) {
 				isaa.putUserInfo(usersList, i);
 				usersList.get(i).calculateStatus();
-				xx += usersList.get(i).ID + ", ";
-				xx += usersList.get(i).userStatus + ", ";
-				xx += usersList.get(i).userInfo + ";\n";
+				board += usersList.get(i).ID + ", ";
+				board += usersList.get(i).userStatus + ", ";
+				board += usersList.get(i).userInfo + ";\n";
 			}
 
-		return ok("" + xx);
+		return ok(board);
 	}
 
 }
