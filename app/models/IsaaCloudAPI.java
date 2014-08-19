@@ -25,25 +25,27 @@ public class IsaaCloudAPI {
 	}
 
 	public void addPointsForDelete(String userEmail, long timeToGivePoints) {
-		JSONObject body = new JSONObject();
-		if (timeToGivePoints > 3600000)
-			body.put("addPoints", "10");
-		else if (timeToGivePoints > 1800000)
-			body.put("addPoints", "5");
-		else
-			body.put("addPoints", "1");
+		if (timeToGivePoints > 0) {
+			JSONObject body = new JSONObject();
+			if (timeToGivePoints > 3600000)
+				body.put("addPoints", "10");
+			else if (timeToGivePoints > 1800000)
+				body.put("addPoints", "5");
+			else
+				body.put("addPoints", "1");
 
-		try {
-			SortedMap<String, String> query = new TreeMap<>();
-			query.put("email", userEmail);
-			JSONArray users = (JSONArray) isaac.path("/cache/users")
-					.withQuery(query).withFields("id").get().getJson();
+			try {
+				SortedMap<String, String> query = new TreeMap<>();
+				query.put("email", userEmail);
+				JSONArray users = (JSONArray) isaac.path("/cache/users")
+						.withQuery(query).withFields("id").get().getJson();
 
-			int id = Integer.parseInt(((JSONObject) users.get(0)).get("id")
-					.toString());
-			isaac.event(id, "USER", "PRIORITY_NORMAL", 1, "NORMAL", body);
-		} catch (IOException e) {
-		} catch (IsaacloudConnectionException e) {
+				int id = Integer.parseInt(((JSONObject) users.get(0)).get("id")
+						.toString());
+				isaac.event(id, "USER", "PRIORITY_NORMAL", 1, "NORMAL", body);
+			} catch (IOException e) {
+			} catch (IsaacloudConnectionException e) {
+			}
 		}
 	}
 
@@ -76,34 +78,32 @@ public class IsaaCloudAPI {
 			if (!users.isEmpty()) {
 				usersList.get(idAL).ID = ((JSONObject) users.get(0)).get("id")
 						.toString();
-				// usersList.get(idAL).userFirstName = ((JSONObject)
-				// users.get(0))
-				// .get("firstName").toString();
-				// usersList.get(idAL).userLastName = ((JSONObject)
-				// users.get(0))
-				// .get("lastName").toString();
-
+				/*
+				 * usersList.get(idAL).userFirstName = ((JSONObject)
+				 * users.get(0)) .get("firstName").toString();
+				 * usersList.get(idAL).userLastName = ((JSONObject)
+				 * users.get(0)) .get("lastName").toString();
+				 */
 				JSONArray counters = (JSONArray) ((JSONObject) users.get(0))
 						.get("counterValues");
 				if (!counters.isEmpty())
 					for (int i = 0; i < counters.size(); i++) {
 						if (((JSONObject) counters.get(i)).get("counter")
-								.toString().equals("1")) {
+								.toString().equals("1")) { // COUNTER PLACE ID=1
 							int groupId = Integer
 									.parseInt(((JSONObject) counters.get(i))
 											.get("value").toString());
 							JSONObject group = (JSONObject) isaac
 									.path("/cache/users/groups/" + groupId)
 									.get().getJson();
-
 							usersList.get(idAL).userPlace = group.get("label")
 									.toString();
 						}
 					}
 			}
-
 		} catch (IOException e) {
 		} catch (IsaacloudConnectionException e) {
 		}
 	}
+
 }

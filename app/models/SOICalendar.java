@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
@@ -20,7 +18,7 @@ public class SOICalendar {
 	public List<Event> items;
 
 	public SOICalendar() {
-		// utworzyc czas synchronizacji gdzieś musi być zapisany. gdzie????
+		// SYNC TIME
 	}
 
 	public boolean getDeleteEvent(
@@ -28,9 +26,9 @@ public class SOICalendar {
 		String pageToken = null;
 		try {
 			/*
-			 * GET ALL EVENTS FROM LAST SYNCHRONIZATION AND CHECK IF IS
-			 * CANCELLED, GET CREATOR EMAIL AND TIME BETWEEN START TIME AND
-			 * CURRENT TIME
+			 * GET ALL EVENTS FROM LAST SYNCHRONIZATION AND CHECK IF THERE IS
+			 * CANCELLED ONE, GET CREATOR EMAIL AND TIME BETWEEN MEETING START
+			 * AND CURRENT TIME, UPDATE LAST SYNCHRONIZATION TIME
 			 */
 			DateTime newSynchronizationTime = new DateTime(new Date());
 			Events events = service.events().list("primary")
@@ -50,7 +48,6 @@ public class SOICalendar {
 			}
 
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		return false;
 	}
@@ -62,8 +59,8 @@ public class SOICalendar {
 		try {
 			/*
 			 * GET ALL EVENTS, CHECK IF THERE IS SOME THAT TIME IS BEETWEN 10min
-			 * AND 0 AND IS IN MEETING ROOM, CHECK IF USER IS AN ATTENDEE AND
-			 * RETURN TRUE IF ALL CONDITIONS ALL TRUE
+			 * AND 0, IS IN MEETING ROOM, CHECK IF USER IS AN ATTENDEE, RETURN
+			 * TRUE IF SO
 			 */
 			Events events = service.events().list("primary")
 					.setPageToken(pageToken).execute();
@@ -78,10 +75,7 @@ public class SOICalendar {
 							&& event.getStatus().equals("confirmed")) {
 						for (int i = 0; i < event.getAttendees().size(); i++) {
 							if (event.getAttendees().get(i).getEmail()
-									.equals(attendeeEmail)
-									&& event.getAttendees().get(i)
-											.getResponseStatus()
-											.equals("accepted")) {
+									.equals(attendeeEmail)) {
 								return true;
 							}
 						}
@@ -89,8 +83,6 @@ public class SOICalendar {
 				}
 			}
 		} catch (IOException ex) {
-			Logger.getLogger(SOICalendar.class.getName()).log(Level.SEVERE,
-					null, ex);
 		}
 		return false;
 	}
@@ -102,8 +94,8 @@ public class SOICalendar {
 		try {
 			/*
 			 * GET ALL EVENTS, CHECK IF THERE IS SOME THAT TIME IS BEETWEN 10min
-			 * AND 0 AND IS IN MEETING ROOM, CHECK IF USER IS AN ATTENDEE AND
-			 * RETURN TRUE IF ALL CONDITIONS ALL TRUE
+			 * BEFORE START AND 0 BEFORE END, IS IN MEETIN, IF TRUE GET USER
+			 * EMAIL, RESPONSE STATUS AND MEETING START TIME
 			 */
 			Events events = service.events().list("primary")
 					.setPageToken(pageToken).execute();
@@ -120,15 +112,13 @@ public class SOICalendar {
 						Users user = new Users();
 						user.userEmail = event.getAttendees().get(i).getEmail();
 						user.time = event.getStart().getDateTime().getValue();
-						usersList.add(user);
 						user.userInfo = event.getAttendees().get(i)
 								.getResponseStatus();
+						usersList.add(user);
 					}
 				}
 			}
 		} catch (IOException ex) {
-			Logger.getLogger(SOICalendar.class.getName()).log(Level.SEVERE,
-					null, ex);
 		}
 		return usersList;
 	}
