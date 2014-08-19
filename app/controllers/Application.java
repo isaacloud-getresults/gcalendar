@@ -11,9 +11,9 @@ import play.mvc.Result;
 public class Application extends Controller {
 
 	public static GoogleCalendarAPI calendar = new GoogleCalendarAPI();
-	public static IsaaCloudAPI isaa = new IsaaCloudAPI();
 
 	public static Result deleteEvent() {
+		IsaaCloudAPI isaa = new IsaaCloudAPI();
 		if (calendar.soiCalendar.getDeleteEvent(calendar.service))
 			isaa.addPointsForDelete(calendar.soiCalendar.emailToGivePoints,
 					calendar.soiCalendar.timeToGivePoints);
@@ -22,6 +22,7 @@ public class Application extends Controller {
 	}
 
 	public static Result meetingCheck() {
+		IsaaCloudAPI isaa = new IsaaCloudAPI();
 		String userEmail = ""
 				+ request().body().asJson().get("body").get("data").asText();
 
@@ -33,6 +34,7 @@ public class Application extends Controller {
 	}
 
 	public static Result meetingBoard() {
+		IsaaCloudAPI isaa = new IsaaCloudAPI();
 		String board = "";
 
 		ArrayList<Users> usersList = calendar.soiCalendar
