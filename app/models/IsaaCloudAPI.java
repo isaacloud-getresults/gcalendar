@@ -19,11 +19,8 @@ public class IsaaCloudAPI {
 
 	public IsaaCloudAPI() {
 		Map<String, String> config = new HashMap<>();
-		// config.put("clientId", "179");
-		// config.put("secret", "cb7de01c3f1d6d3d5ed2acb1580a997");
-
-		config.put("clientId", "191");
-		config.put("secret", "77aeb31a7770e96f71225263f0a92d7b");
+		config.put("clientId", "179");
+		config.put("secret", "cb7de01c3f1d6d3d5ed2acb1580a997");
 		isaac = new Isaacloud(config);
 	}
 
@@ -52,7 +49,6 @@ public class IsaaCloudAPI {
 
 	public void addPointsForAttendance(String userEmail, String x) {
 		JSONObject body = new JSONObject();
-		x = "\"" + x + "\"";
 		body.put(x, "10");
 
 		try {
