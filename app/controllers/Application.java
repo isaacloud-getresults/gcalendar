@@ -64,10 +64,9 @@ public class Application extends Controller {
 
 	public static Result meetingBoard() {
 		String board = "";
-		String isaaBase64 = request().body().asJson().get("body")
-				.get("isaaBase64").asText();
-		String calendarBase64 = request().body().asJson().get("body")
-				.get("calendarBase64").asText();
+		String isaaBase64 = "MTc5OmNiN2RlMDFjM2YxZDZkM2Q1ZWQyYWNiMTU4MGE5OTc=";
+		String calendarBase64 = "OTg4NzIyODY5NDU0LWRibWd2cHMwYWpoam9kamNjZ2dxcnM1bWFpdjd0NDg5LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tOiBjSmhqTmVPT2dDbGRkWkNoTzNqYTR3SXY=";
+
 		IsaaCloudAPI isaa = new IsaaCloudAPI(isaaBase64);
 		GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
 
