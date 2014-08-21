@@ -39,8 +39,11 @@ public class GoogleCalendarAPI {
 			throws Exception {
 
 		GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-				httpTransport, JSON_FACTORY, id, secret,
-				Collections.singleton(CalendarScopes.CALENDAR))
+				httpTransport,
+				JSON_FACTORY,
+				"338968387608-575mgn8cejq5rhm1mj0353ne2naa5pr1.apps.googleusercontent.com",
+				"auINWlXFaZRFU3XTW8kS2y5m", Collections
+						.singleton(CalendarScopes.CALENDAR))
 				.setDataStoreFactory(dataStoreFactory).build();
 		return new AuthorizationCodeInstalledApp(flow,
 				new LocalServerReceiver()).authorize("user");
