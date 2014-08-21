@@ -3,6 +3,8 @@ package models;
 import java.io.IOException;
 import java.util.Collections;
 
+import org.apache.commons.codec.binary.Base64;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -32,32 +34,36 @@ public class GoogleCalendarAPI {
 
 	public com.google.api.services.calendar.Calendar service;
 
-	private static Credential authorize() throws Exception {
+	private static Credential authorize(String id, String secret)
+			throws Exception {
 
 		GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-				httpTransport,
-				JSON_FACTORY,
-				"338968387608-575mgn8cejq5rhm1mj0353ne2naa5pr1.apps.googleusercontent.com",
-				"auINWlXFaZRFU3XTW8kS2y5m", Collections
-						.singleton(CalendarScopes.CALENDAR))
+				httpTransport, JSON_FACTORY, id, secret,
+				Collections.singleton(CalendarScopes.CALENDAR))
 				.setDataStoreFactory(dataStoreFactory).build();
 		return new AuthorizationCodeInstalledApp(flow,
 				new LocalServerReceiver()).authorize("user");
 	}
 
-	public GoogleCalendarAPI() {
+	public GoogleCalendarAPI(String calendarBase64) {
 		try {
 			httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 
 			dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
 
-			Credential credential = authorize();
+			byte[] decoded = Base64.decodeBase64(calendarBase64);
+			String decodedBase64 = new String(decoded, "UTF-8");
+			if (decodedBase64.contains(":")) {
+				String[] token = decodedBase64.split(":");
 
-			service = new com.google.api.services.calendar.Calendar.Builder(
-					httpTransport, JSON_FACTORY, credential)
-					.setApplicationName(APPLICATION_NAME).build();
+				Credential credential = authorize(token[0], token[1]);
 
-			soiCalendar = new SOICalendar();
+				service = new com.google.api.services.calendar.Calendar.Builder(
+						httpTransport, JSON_FACTORY, credential)
+						.setApplicationName(APPLICATION_NAME).build();
+
+				soiCalendar = new SOICalendar();
+			}
 		} catch (IOException e) {
 		} catch (Throwable t) {
 		}

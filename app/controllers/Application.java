@@ -1,30 +1,57 @@
 package controllers;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import models.GoogleCalendarAPI;
 import models.IsaaCloudAPI;
 import models.Users;
+
+import org.apache.commons.codec.binary.Base64;
+
 import play.mvc.Controller;
 import play.mvc.Result;
 
 public class Application extends Controller {
 
-	public static GoogleCalendarAPI calendar = new GoogleCalendarAPI();
-
+	// AVAILABLE IN v2
 	public static Result deleteEvent() {
-		IsaaCloudAPI isaa = new IsaaCloudAPI();
-		if (calendar.soiCalendar.getDeleteEvent(calendar.service))
-			isaa.addPointsForDelete(calendar.soiCalendar.emailToGivePoints,
-					calendar.soiCalendar.timeToGivePoints);
+		// IsaaCloudAPI isaa = new IsaaCloudAPI();
+		// if (calendar.soiCalendar.getDeleteEvent(calendar.service))
+		// isaa.addPointsForDelete(calendar.soiCalendar.emailToGivePoints,
+		// calendar.soiCalendar.timeToGivePoints);
 
-		return ok("ok");
+		String base64 = "Mjc4OmI0MzU5YWEzZTA3YjgwNjg3OTE4ODQyYTMyOTIxNmJk";
+		String decodedBase64;
+		String id = "";
+		String secret = "";
+		byte[] decoded = Base64.decodeBase64(base64);
+		try {
+			decodedBase64 = new String(decoded, "UTF-8");
+			if (decodedBase64.contains(":")) {
+				String[] parts = decodedBase64.split(":");
+				id = parts[0];
+				secret = parts[1];
+			}
+			System.out.println(new String(decoded, "UTF-8") + "\n");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return ok("id: " + id + " secret: " + secret);
 	}
 
 	public static Result meetingCheck() {
-		IsaaCloudAPI isaa = new IsaaCloudAPI();
 		String userEmail = ""
 				+ request().body().asJson().get("body").get("data").asText();
+		String isaaBase64 = request().body().asJson().get("body")
+				.get("isaaBase64").asText();
+		String calendarBase64 = request().body().asJson().get("body")
+				.get("calendarBase64").asText();
+
+		IsaaCloudAPI isaa = new IsaaCloudAPI(isaaBase64);
+		GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
 
 		if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
 				userEmail))
@@ -34,8 +61,13 @@ public class Application extends Controller {
 	}
 
 	public static Result meetingBoard() {
-		IsaaCloudAPI isaa = new IsaaCloudAPI();
 		String board = "";
+		String isaaBase64 = request().body().asJson().get("body")
+				.get("isaaBase64").asText();
+		String calendarBase64 = request().body().asJson().get("body")
+				.get("calendarBase64").asText();
+		IsaaCloudAPI isaa = new IsaaCloudAPI(isaaBase64);
+		GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
 
 		ArrayList<Users> usersList = calendar.soiCalendar
 				.putUserEmails(calendar.service);
