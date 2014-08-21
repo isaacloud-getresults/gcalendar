@@ -32,7 +32,7 @@ public class GoogleCalendarAPI {
 	private static final JsonFactory JSON_FACTORY = JacksonFactory
 			.getDefaultInstance();
 
-	public com.google.api.services.calendar.Calendar service;
+	public com.google.api.services.calendar.Calendar service = null;
 
 	private static Credential authorize(String id, String secret)
 			throws Exception {
@@ -46,23 +46,21 @@ public class GoogleCalendarAPI {
 	}
 
 	public GoogleCalendarAPI(String calendarBase64) {
+		soiCalendar = new SOICalendar();
 		try {
 			httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 
 			dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
-
 			byte[] decoded = Base64.decodeBase64(calendarBase64);
 			String decodedBase64 = new String(decoded, "UTF-8");
 			if (decodedBase64.contains(":")) {
 				String[] token = decodedBase64.split(":");
-
 				Credential credential = authorize(token[0], token[1]);
 
 				service = new com.google.api.services.calendar.Calendar.Builder(
 						httpTransport, JSON_FACTORY, credential)
 						.setApplicationName(APPLICATION_NAME).build();
 
-				soiCalendar = new SOICalendar();
 			}
 		} catch (IOException e) {
 		} catch (Throwable t) {

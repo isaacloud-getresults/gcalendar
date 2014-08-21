@@ -62,7 +62,7 @@ public class IsaaCloudAPI {
 
 	public void addPointsForAttendance(String userEmail) {
 		JSONObject body = new JSONObject();
-		body.put("addPoints", "2");
+		body.put("addPoints", "1");
 
 		try {
 			SortedMap<String, String> query = new TreeMap<>();

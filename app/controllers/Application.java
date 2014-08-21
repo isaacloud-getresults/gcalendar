@@ -33,9 +33,7 @@ public class Application extends Controller {
 				id = parts[0];
 				secret = parts[1];
 			}
-			System.out.println(new String(decoded, "UTF-8") + "\n");
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -55,18 +53,18 @@ public class Application extends Controller {
 		IsaaCloudAPI isaa = new IsaaCloudAPI(isaaBase64);
 		GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
 
-		// if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
-		// userEmail))
-		isaa.addPointsForAttendance(userEmail);
+		if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
+				userEmail))
+			isaa.addPointsForAttendance(userEmail);
 
 		return ok("ok");
 	}
 
 	public static Result meetingBoard() {
 		String board = "";
+
 		String isaaBase64 = "MTc5OmNiN2RlMDFjM2YxZDZkM2Q1ZWQyYWNiMTU4MGE5OTc=";
 		String calendarBase64 = "OTg4NzIyODY5NDU0LWRibWd2cHMwYWpoam9kamNjZ2dxcnM1bWFpdjd0NDg5LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tOiBjSmhqTmVPT2dDbGRkWkNoTzNqYTR3SXY=";
-
 		IsaaCloudAPI isaa = new IsaaCloudAPI(isaaBase64);
 		GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
 
@@ -80,7 +78,6 @@ public class Application extends Controller {
 				board += usersList.get(i).userStatus + ", ";
 				board += usersList.get(i).userInfo + ";\n";
 			}
-
 		return ok(board);
 	}
 
