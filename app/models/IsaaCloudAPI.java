@@ -26,15 +26,13 @@ public class IsaaCloudAPI {
 			String decodedBase64 = new String(decoded, "UTF-8");
 			if (decodedBase64.contains(":")) {
 				String[] token = decodedBase64.split(":");
-
+				Map<String, String> config = new HashMap<>();
+				config.put("clientId", token[0]);
+				config.put("secret", token[1]);
+				isaac = new Isaacloud(config);
 			}
 		} catch (UnsupportedEncodingException e) {
 		}
-
-		Map<String, String> config = new HashMap<>();
-		config.put("clientId", "179");
-		config.put("secret", "cb7de01c3f1d6d3d5ed2acb1580a997");
-		isaac = new Isaacloud(config);
 	}
 
 	public void addPointsForDelete(String userEmail, long timeToGivePoints) {

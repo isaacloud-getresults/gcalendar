@@ -53,7 +53,7 @@ public class Application extends Controller {
 						.asText();
 
 		IsaaCloudAPI isaa = new IsaaCloudAPI(isaaBase64);
-		// GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
+		GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
 
 		// if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
 		// userEmail))
