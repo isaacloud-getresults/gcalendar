@@ -1,7 +1,6 @@
 package models;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +11,7 @@ import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.StringUtils;
 
 import com.isaacloud.sdk.Isaacloud;
 import com.isaacloud.sdk.IsaacloudConnectionException;
@@ -21,17 +21,14 @@ public class IsaaCloudAPI {
 	private Isaacloud isaac;
 
 	public IsaaCloudAPI(String isaaBase64) {
-		try {
-			byte[] decoded = Base64.decodeBase64(isaaBase64);
-			String decodedBase64 = new String(decoded, "UTF-8");
-			if (decodedBase64.contains(":")) {
-				String[] token = decodedBase64.split(":");
-				Map<String, String> config = new HashMap<>();
-				config.put("clientId", token[0]);
-				config.put("secret", token[1]);
-				isaac = new Isaacloud(config);
-			}
-		} catch (UnsupportedEncodingException e) {
+		String decodedBase64 = StringUtils.newStringUtf8(Base64
+				.decodeBase64(isaaBase64));
+		if (decodedBase64.contains(":")) {
+			String[] token = decodedBase64.split(":");
+			Map<String, String> config = new HashMap<>();
+			config.put("clientId", token[0]);
+			config.put("secret", token[1]);
+			isaac = new Isaacloud(config);
 		}
 	}
 

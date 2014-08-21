@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Collections;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.StringUtils;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -51,8 +52,9 @@ public class GoogleCalendarAPI {
 			httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 
 			dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
-			byte[] decoded = Base64.decodeBase64(calendarBase64);
-			String decodedBase64 = new String(decoded, "UTF-8");
+
+			String decodedBase64 = StringUtils.newStringUtf8(Base64
+					.decodeBase64(calendarBase64));
 			if (decodedBase64.contains(":")) {
 				String[] token = decodedBase64.split(":");
 				Credential credential = authorize(token[0], token[1]);

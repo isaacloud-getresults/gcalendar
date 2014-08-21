@@ -21,7 +21,7 @@ public class Application extends Controller {
 		// isaa.addPointsForDelete(calendar.soiCalendar.emailToGivePoints,
 		// calendar.soiCalendar.timeToGivePoints);
 
-		String base64 = "Mjc4OmI0MzU5YWEzZTA3YjgwNjg3OTE4ODQyYTMyOTIxNmJk";
+		String base64 = "MjgwOjM5Yjk4ZjQ4YWNjYjQ2Y2ZhMzM3YjIxMDcyZDJlZmY=";
 		String decodedBase64;
 		String id = "";
 		String secret = "";
@@ -63,8 +63,8 @@ public class Application extends Controller {
 	public static Result meetingBoard() {
 		String board = "";
 
-		String isaaBase64 = "MTc5OmNiN2RlMDFjM2YxZDZkM2Q1ZWQyYWNiMTU4MGE5OTc=";
-		String calendarBase64 = "OTg4NzIyODY5NDU0LWRibWd2cHMwYWpoam9kamNjZ2dxcnM1bWFpdjd0NDg5LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tOiBjSmhqTmVPT2dDbGRkWkNoTzNqYTR3SXY=";
+		String isaaBase64 = "MjgwOjM5Yjk4ZjQ4YWNjYjQ2Y2ZhMzM3YjIxMDcyZDJlZmY=";
+		String calendarBase64 = "MzM4OTY4Mzg3NjA4LTU3NW1nbjhjZWpxNXJobTFtajAzNTNuZTJuYWE1cHIxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tOiBhdUlOV2xYRmFaUkZVM1hUVzhrUzJ5NW0=";
 		IsaaCloudAPI isaa = new IsaaCloudAPI(isaaBase64);
 		GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
 
