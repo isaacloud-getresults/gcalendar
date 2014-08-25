@@ -89,7 +89,7 @@ public class SOICalendar {
 	}
 
 	public ArrayList<Users> putUserEmails(
-			com.google.api.services.calendar.Calendar service) {
+			com.google.api.services.calendar.Calendar service, String roomLabel) {
 		ArrayList<Users> usersList = new ArrayList<Users>();
 		String pageToken = null;
 		try {
@@ -106,9 +106,9 @@ public class SOICalendar {
 						- new Date().getTime();
 				long timeEnd = event.getEnd().getDateTime().getValue()
 						- new Date().getTime();
-				// 10 minutes = 600 000 milliseconds
-				if (timeStart < 600000 && timeEnd > 0
-						&& event.getLocation().equals("Meeting room")) {
+				// 20 minutes = 1200 000 milliseconds
+				if (timeStart < 1200000 && timeEnd > 0
+						&& event.getLocation().equals(roomLabel)) {
 					for (int i = 0; i < event.getAttendees().size(); i++) {
 						Users user = new Users();
 						user.userEmail = event.getAttendees().get(i).getEmail();

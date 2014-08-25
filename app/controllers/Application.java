@@ -40,15 +40,16 @@ public class Application extends Controller {
 		return ok("ok");
 	}
 
-	public static Result meetingBoard(String iB64, String cB64) {
+	public static Result meetingBoard(String iB64, String cB64, String id) {
 		String board = "";
 		String isaaBase64 = iB64;
 		String calendarBase64 = cB64;
 		IsaaCloudAPI isaa = new IsaaCloudAPI(isaaBase64);
 		GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
 
-		ArrayList<Users> usersList = calendar.soiCalendar
-				.putUserEmails(calendar.service);
+		String roomLabel = isaa.getRoomLabel(id);
+		ArrayList<Users> usersList = calendar.soiCalendar.putUserEmails(
+				calendar.service, roomLabel);
 		if (usersList != null)
 			for (int i = 0; i < usersList.size(); i++) {
 				isaa.putUserInfo(usersList, i);
