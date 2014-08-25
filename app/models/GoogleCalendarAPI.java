@@ -36,17 +36,17 @@ public class GoogleCalendarAPI {
 	public com.google.api.services.calendar.Calendar service = null;
 
 	private static Credential authorize(String id, String secret)
-			throws Exception {
+			throws IOException {
 
-		GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-				httpTransport,
-				JSON_FACTORY,
-				"338968387608-575mgn8cejq5rhm1mj0353ne2naa5pr1.apps.googleusercontent.com",
-				"auINWlXFaZRFU3XTW8kS2y5m", Collections
-						.singleton(CalendarScopes.CALENDAR))
-				.setDataStoreFactory(dataStoreFactory).build();
-		return new AuthorizationCodeInstalledApp(flow,
-				new LocalServerReceiver()).authorize("user");
+		if (id != null && secret != null) {
+			GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+					httpTransport, JSON_FACTORY, id, secret,
+					Collections.singleton(CalendarScopes.CALENDAR))
+					.setDataStoreFactory(dataStoreFactory).build();
+			return new AuthorizationCodeInstalledApp(flow,
+					new LocalServerReceiver()).authorize("user");
+		}
+		return null;
 	}
 
 	public GoogleCalendarAPI(String calendarBase64) {
@@ -60,7 +60,8 @@ public class GoogleCalendarAPI {
 					.decodeBase64(calendarBase64));
 			if (decodedBase64.contains(":")) {
 				String[] token = decodedBase64.split(":");
-				Credential credential = authorize(token[0], token[1]);
+				Credential credential = authorize(token[0].toString(),
+						token[1].toString());
 
 				service = new com.google.api.services.calendar.Calendar.Builder(
 						httpTransport, JSON_FACTORY, credential)
