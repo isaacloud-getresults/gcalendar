@@ -41,22 +41,26 @@ public class Application extends Controller {
 	}
 
 	public static Result meetingCheck() {
-		String userEmail = ""
-				+ request().body().asJson().get("body").get("data").asText();
-		System.out.println(userEmail);
-		String isaaBase64 = ""
-				+ request().body().asJson().get("body").get("isaaBase64")
-						.asText();
-		String calendarBase64 = ""
-				+ request().body().asJson().get("body").get("calendarBase64")
-						.asText();
+		// String userEmail = ""
+		// + request().body().asJson().get("body").get("data").asText();
+		// System.out.println(userEmail);
+		// String isaaBase64a = ""
+		// + request().body().asJson().get("body").get("isaaBase64")
+		// .asText();
+		// String calendarBase64a = ""
+		// + request().body().asJson().get("body").get("calendarBase64")
+		// .asText();
+
+		String isaaBase64 = "MjgwOjM5Yjk4ZjQ4YWNjYjQ2Y2ZhMzM3YjIxMDcyZDJlZmY=";
+		String calendarBase64 = "MzM4OTY4Mzg3NjA4LTU3NW1nbjhjZWpxNXJobTFtajAzNTNuZTJuYWE1cHIxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tOiBhdUlOV2xYRmFaUkZVM1hUVzhrUzJ5NW0=";
 
 		IsaaCloudAPI isaa = new IsaaCloudAPI(isaaBase64);
 		GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
 
+		String email = "mnowicki@sosoftware.pl";
 		// if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
 		// userEmail))
-		isaa.addPointsForAttendance(userEmail);
+		isaa.addPointsForAttendance(email);
 
 		return ok("ok");
 	}
