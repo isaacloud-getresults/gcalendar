@@ -38,18 +38,14 @@ public class GoogleCalendarAPI {
 	private static Credential authorize(String id, String secret)
 			throws IOException {
 
-		if (id != null && secret != null) {
-			GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-					httpTransport,
-					JSON_FACTORY,
-					"338968387608-575mgn8cejq5rhm1mj0353ne2naa5pr1.apps.googleusercontent.com",
-					"auINWlXFaZRFU3XTW8kS2y5m", Collections
-							.singleton(CalendarScopes.CALENDAR))
-					.setDataStoreFactory(dataStoreFactory).build();
-			return new AuthorizationCodeInstalledApp(flow,
-					new LocalServerReceiver()).authorize("user");
-		}
-		return null;
+		String i = "338968387608-575mgn8cejq5rhm1mj0353ne2naa5pr1.apps.googleusercontent.com";
+		String s = "auINWlXFaZRFU3XTW8kS2y5m";
+		GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+				httpTransport, JSON_FACTORY, i, s,
+				Collections.singleton(CalendarScopes.CALENDAR))
+				.setDataStoreFactory(dataStoreFactory).build();
+		return new AuthorizationCodeInstalledApp(flow,
+				new LocalServerReceiver()).authorize("user");
 	}
 
 	public GoogleCalendarAPI(String calendarBase64) {
