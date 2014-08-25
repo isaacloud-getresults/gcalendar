@@ -38,9 +38,9 @@ public class GoogleCalendarAPI {
 	private static Credential authorize(String id, String secret)
 			throws IOException {
 
-		System.out.println(id + "xxxx");
+		System.out.println(id);
 		System.out.println(secret + "xxxx");
-		String i = "338968387608-575mgn8cejq5rhm1mj0353ne2naa5pr1.apps.googleusercontent.com";
+		String i = id;
 		String s = "auINWlXFaZRFU3XTW8kS2y5m";
 		GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
 				httpTransport, JSON_FACTORY, i, s,
