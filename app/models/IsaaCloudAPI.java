@@ -25,9 +25,11 @@ public class IsaaCloudAPI {
 				.decodeBase64(isaaBase64));
 		if (decodedBase64.contains(":")) {
 			String[] token = decodedBase64.split(":");
+			String id = token[0].toString();
+			String secret = token[1].toString();
 			Map<String, String> config = new HashMap<>();
-			config.put("clientId", "280");
-			config.put("secret", "39b98f48accb46cfa337b21072d2eff");
+			config.put("clientId", id);
+			config.put("secret", secret);
 			isaac = new Isaacloud(config);
 		}
 	}
