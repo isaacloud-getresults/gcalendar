@@ -21,6 +21,9 @@ public class Application extends Controller {
 	}
 
 	public static Result meetingCheck() {
+		System.out.println("test"
+				+ request().body().asJson().get("body").get("calendarBase64")
+						.asText());
 		String userEmail = ""
 				+ request().body().asJson().get("body").get("data").asText();
 		String isaaBase64 = ""
