@@ -1,14 +1,10 @@
 package controllers;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import models.GoogleCalendarAPI;
 import models.IsaaCloudAPI;
 import models.Users;
-
-import org.apache.commons.codec.binary.Base64;
-
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -21,46 +17,25 @@ public class Application extends Controller {
 		// isaa.addPointsForDelete(calendar.soiCalendar.emailToGivePoints,
 		// calendar.soiCalendar.timeToGivePoints);
 
-		String base64 = "MjgwOjM5Yjk4ZjQ4YWNjYjQ2Y2ZhMzM3YjIxMDcyZDJlZmY=";
-		String decodedBase64;
-		String id = "";
-		String secret = "";
-		byte[] decoded = Base64.decodeBase64(base64);
-		try {
-			decodedBase64 = new String(decoded, "UTF-8");
-			if (decodedBase64.contains(":")) {
-				String[] parts = decodedBase64.split(":");
-				id = parts[0];
-				secret = parts[1];
-			}
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-
-		return ok("id: " + id + " secret: " + secret);
+		return ok("ok");
 	}
 
 	public static Result meetingCheck() {
-		// String userEmail = ""
-		// + request().body().asJson().get("body").get("data").asText();
-		// System.out.println(userEmail);
-		// String isaaBase64a = ""
-		// + request().body().asJson().get("body").get("isaaBase64")
-		// .asText();
-		// String calendarBase64a = ""
-		// + request().body().asJson().get("body").get("calendarBase64")
-		// .asText();
-
-		String isaaBase64 = "MjgwOjM5Yjk4ZjQ4YWNjYjQ2Y2ZhMzM3YjIxMDcyZDJlZmY=";
-		String calendarBase64 = "MzM4OTY4Mzg3NjA4LTU3NW1nbjhjZWpxNXJobTFtajAzNTNuZTJuYWE1cHIxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tOiBhdUlOV2xYRmFaUkZVM1hUVzhrUzJ5NW0=";
+		String userEmail = ""
+				+ request().body().asJson().get("body").get("data").asText();
+		String isaaBase64 = ""
+				+ request().body().asJson().get("body").get("isaaBase64")
+						.asText();
+		String calendarBase64 = ""
+				+ request().body().asJson().get("body").get("calendarBase64")
+						.asText();
 
 		IsaaCloudAPI isaa = new IsaaCloudAPI(isaaBase64);
 		GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
 
-		String email = "mnowicki@sosoftware.pl";
-		// if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
-		// userEmail))
-		isaa.addPointsForAttendance(email);
+		if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
+				userEmail))
+			isaa.addPointsForAttendance(userEmail);
 
 		return ok("ok");
 	}
