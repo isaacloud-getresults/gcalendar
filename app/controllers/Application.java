@@ -60,11 +60,10 @@ public class Application extends Controller {
 		return ok("ok");
 	}
 
-	public static Result meetingBoard() {
+	public static Result meetingBoard(String iB64, String cB64) {
 		String board = "";
-
-		String isaaBase64 = "MjgwOjM5Yjk4ZjQ4YWNjYjQ2Y2ZhMzM3YjIxMDcyZDJlZmY=";
-		String calendarBase64 = "MzM4OTY4Mzg3NjA4LTU3NW1nbjhjZWpxNXJobTFtajAzNTNuZTJuYWE1cHIxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tOiBhdUlOV2xYRmFaUkZVM1hUVzhrUzJ5NW0=";
+		String isaaBase64 = iB64;
+		String calendarBase64 = cB64;
 		IsaaCloudAPI isaa = new IsaaCloudAPI(isaaBase64);
 		GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
 
@@ -80,5 +79,4 @@ public class Application extends Controller {
 			}
 		return ok(board);
 	}
-
 }
