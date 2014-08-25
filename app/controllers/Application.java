@@ -43,6 +43,7 @@ public class Application extends Controller {
 	public static Result meetingCheck() {
 		String userEmail = ""
 				+ request().body().asJson().get("body").get("data").asText();
+		System.out.println(userEmail);
 		String isaaBase64 = ""
 				+ request().body().asJson().get("body").get("isaaBase64")
 						.asText();
