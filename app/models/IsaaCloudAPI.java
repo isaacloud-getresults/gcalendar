@@ -118,13 +118,15 @@ public class IsaaCloudAPI {
 
 	public String getRoomLabel(String id) {
 		try {
-			JSONObject group = (JSONObject) isaac
-					.path("/cache/users/groups/" + id).get().getJson();
-			return group.get("label").toString();
+			if (id != null) {
+				JSONObject group = (JSONObject) isaac
+						.path("/cache/users/groups/" + id).get().getJson();
+				return group.get("label").toString();
+			}
 		} catch (IOException e) {
 		} catch (IsaacloudConnectionException e) {
 		}
-		return null;
+		return "";
 	}
 
 }

@@ -47,8 +47,8 @@ public class Application extends Controller {
 		IsaaCloudAPI isaa = new IsaaCloudAPI(isaaBase64);
 		GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
 
-		String x = id;
-		String roomLabel = isaa.getRoomLabel(x);
+		String roomLabel = isaa.getRoomLabel(id);
+		// String roomLabel = "Meeting Room";
 		ArrayList<Users> usersList = calendar.soiCalendar.putUserEmails(
 				calendar.service, roomLabel);
 		if (usersList != null)
