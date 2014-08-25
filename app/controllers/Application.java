@@ -48,7 +48,6 @@ public class Application extends Controller {
 		GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
 
 		String roomLabel = isaa.getRoomLabel(id);
-		// String roomLabel = "Meeting Room";
 		ArrayList<Users> usersList = calendar.soiCalendar.putUserEmails(
 				calendar.service, roomLabel);
 		if (usersList != null)
