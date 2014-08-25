@@ -41,7 +41,7 @@ public class GoogleCalendarAPI {
 		System.out.println(id);
 		System.out.println(secret + "xxxx");
 		String i = id;
-		String s = "auINWlXFaZRFU3XTW8kS2y5m";
+		String s = secret;
 		GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
 				httpTransport, JSON_FACTORY, i, s,
 				Collections.singleton(CalendarScopes.CALENDAR))
