@@ -32,7 +32,7 @@ public class Application extends Controller {
 		// String calendarBase64 = ""
 		// + request().body().asJson().get("body").get("calendarBase64")
 		// .asText();
-		String isaaBase64 = "";
+		String isaaBase64 = "MjgwOjM5Yjk4ZjQ4YWNjYjQ2Y2ZhMzM3YjIxMDcyZDJlZmY=";
 		String email = "johnsnow@sosoftware.pl";
 		IsaaCloudAPI isaa = new IsaaCloudAPI(isaaBase64);
 		// GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
