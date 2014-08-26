@@ -38,7 +38,7 @@ public class Application extends Controller {
 		// GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
 		// /if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
 		// userEmail))
-		isaa.addPointsForAttendance(email, userEmail);
+		// isaa.addPointsForAttendance(email, userEmail);
 
 		return ok("ok");
 	}
