@@ -159,7 +159,7 @@ public class IsaaCloudAPI {
 			int nType = Integer.parseInt(((JSONObject) ((JSONArray) isaac
 					.path("/admin/notifications/types").withQuery(query).get()
 					.getJson()).get(0)).get("id").toString());
-			isaac.path("/admin/segments/" + nType).delete();
+			isaac.path("/admin/notifications/types/" + nType).delete();
 		}
 
 		JSONArray conditions = (JSONArray) isaac.path("/admin/conditions")
