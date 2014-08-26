@@ -71,8 +71,10 @@ public class SOICalendar {
 					long time = event.getStart().getDateTime().getValue()
 							- new Date().getTime();
 					// 10 minutes = 600 000 milliseconds
-					if (time < 600000 && time > 0
-							&& event.getLocation().equals("Meeting room")
+					if (time < 600000
+							&& time > 0
+							&& event.getLocation().toLowerCase()
+									.contains("meeting")
 							&& event.getStatus().equals("confirmed")) {
 						for (int i = 0; i < event.getAttendees().size(); i++) {
 							if (event.getAttendees().get(i).getEmail()
