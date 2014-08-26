@@ -24,7 +24,7 @@ public class Application extends Controller {
 	}
 
 	public static Result meetingCheck() {
-		String userEmail = "s" + request().body().toString();
+		String userEmail = "s" + request().body().asJson().get("data").asText();
 		// String isaaBase64 = ""
 		// + request().body().asJson().get("body").get("isaaBase64")
 		// .asText();
