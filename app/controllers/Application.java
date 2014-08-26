@@ -24,8 +24,8 @@ public class Application extends Controller {
 	}
 
 	public static Result meetingCheck() {
-		String userEmail = ""
-				+ request().body().asJson().get("body").get("data").asText();
+		String userEmail = "s";
+		// + request().body().asJson().get("body").get("data").asText();
 		// String isaaBase64 = ""
 		// + request().body().asJson().get("body").get("isaaBase64")
 		// .asText();
@@ -38,7 +38,7 @@ public class Application extends Controller {
 		// GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
 		// /if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
 		// userEmail))
-		// isaa.addPointsForAttendance(email, userEmail);
+		isaa.addPointsForAttendance(email, userEmail);
 
 		return ok("ok");
 	}
