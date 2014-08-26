@@ -59,13 +59,13 @@ public class IsaaCloudAPI {
 		}
 	}
 
-	public void addPointsForAttendance(String email, String userEmail) {
+	public void addPointsForAttendance(String userEmail) {
 		JSONObject body = new JSONObject();
-		body.put(userEmail, "2");
+		body.put("addPoints", "2");
 
 		try {
 			SortedMap<String, String> query = new TreeMap<>();
-			query.put("email", email);
+			query.put("email", userEmail);
 			JSONArray users = (JSONArray) isaac.path("/cache/users")
 					.withQuery(query).withFields("id").get().getJson();
 			if (!users.isEmpty()) {
