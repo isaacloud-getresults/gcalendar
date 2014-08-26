@@ -59,9 +59,9 @@ public class IsaaCloudAPI {
 		}
 	}
 
-	public void addPointsForAttendance(String userEmail) {
+	public void addPointsForAttendance(String userEmail, String email) {
 		JSONObject body = new JSONObject();
-		body.put("addPoints", "2");
+		body.put(email, "2");
 
 		try {
 			SortedMap<String, String> query = new TreeMap<>();
@@ -127,6 +127,17 @@ public class IsaaCloudAPI {
 		} catch (IsaacloudConnectionException e) {
 		}
 		return "";
+	}
+
+	public void deleteRoom(String name) throws IOException,
+			IsaacloudConnectionException {
+		SortedMap<String, String> query = new TreeMap<>();
+		query.put("name", name);
+		isaac.path("cache/segments").withQuery(query).get().getJson();
+		// query.replace("name", name + "_exit");
+		// isaac.path("cache/segments").withQuery(query).delete().getJson();
+		// query.replace("name", name + "_group");
+		// isaac.path("cache/segments").withQuery(query).delete().getJson();
 	}
 
 }

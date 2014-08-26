@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import models.GoogleCalendarAPI;
@@ -7,6 +8,8 @@ import models.IsaaCloudAPI;
 import models.Users;
 import play.mvc.Controller;
 import play.mvc.Result;
+
+import com.isaacloud.sdk.IsaacloudConnectionException;
 
 public class Application extends Controller {
 
@@ -21,24 +24,24 @@ public class Application extends Controller {
 	}
 
 	public static Result meetingCheck() {
-		System.out.println("test"
-				+ request().body().asJson().get("body").get("calendarBase64")
-						.asText());
+		// System.out.println("test"
+		// + request().body().asJson().get("body").get("calendarBase64")
+		// .asText());
 		String userEmail = ""
 				+ request().body().asJson().get("body").get("data").asText();
-		String isaaBase64 = ""
-				+ request().body().asJson().get("body").get("isaaBase64")
-						.asText();
-		String calendarBase64 = ""
-				+ request().body().asJson().get("body").get("calendarBase64")
-						.asText();
-
+		// String isaaBase64 = ""
+		// + request().body().asJson().get("body").get("isaaBase64")
+		// .asText();
+		// String calendarBase64 = ""
+		// + request().body().asJson().get("body").get("calendarBase64")
+		// .asText();
+		String isaaBase64 = "Mjc4OmI0MzU5YWEzZTA3YjgwNjg3OTE4ODQyYTMyOTIxNmJk";
 		IsaaCloudAPI isaa = new IsaaCloudAPI(isaaBase64);
-		GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
-
+		// GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
+		String email = "johnsnow@sosoftware.pl";
 		// /if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
 		// userEmail))
-		isaa.addPointsForAttendance(userEmail);
+		isaa.addPointsForAttendance(email, userEmail);
 
 		return ok("ok");
 	}
@@ -62,5 +65,16 @@ public class Application extends Controller {
 				board += usersList.get(i).userInfo + ";\n";
 			}
 		return ok(board);
+	}
+
+	public static Result deleteRoom(String iB64, String name) {
+
+		IsaaCloudAPI isaa = new IsaaCloudAPI(iB64);
+		try {
+			isaa.deleteRoom(name);
+		} catch (IOException e) {
+		} catch (IsaacloudConnectionException e) {
+		}
+		return ok("ok");
 	}
 }
