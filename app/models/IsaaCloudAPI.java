@@ -209,7 +209,7 @@ public class IsaaCloudAPI {
 						"/admin/games/" + ((JSONObject) games.get(i)).get("id"))
 						.delete();
 			else if (((JSONObject) games.get(i)).get("name").toString()
-					.contains(name + "_visit")) {
+					.contains(name + "_visit_")) {
 				for (int j = 0; j < ((JSONArray) ((JSONObject) games.get(i))
 						.get("notifications")).size(); j++)
 					isaac.path(
