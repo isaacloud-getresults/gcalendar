@@ -30,10 +30,10 @@ public class Application extends Controller {
 		String calendarBase64 = ""
 				+ request().body().asJson().get("calendarBase64").asText();
 		IsaaCloudAPI isaa = new IsaaCloudAPI(isaaBase64);
-		// GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
-		// /if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
-		// userEmail))
-		isaa.addPointsForAttendance(userEmail);
+		GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
+		if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
+				userEmail))
+			isaa.addPointsForAttendance(userEmail);
 
 		return ok("ok");
 	}
