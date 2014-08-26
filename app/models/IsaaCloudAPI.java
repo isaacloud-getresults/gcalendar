@@ -59,13 +59,13 @@ public class IsaaCloudAPI {
 		}
 	}
 
-	public void addPointsForAttendance(String userEmail, String email) {
+	public void addPointsForAttendance(String email, String userEmail) {
 		JSONObject body = new JSONObject();
-		body.put(email, "2");
+		body.put(userEmail, "2");
 
 		try {
 			SortedMap<String, String> query = new TreeMap<>();
-			query.put("email", userEmail);
+			query.put("email", email);
 			JSONArray users = (JSONArray) isaac.path("/cache/users")
 					.withQuery(query).withFields("id").get().getJson();
 			if (!users.isEmpty()) {
@@ -131,13 +131,46 @@ public class IsaaCloudAPI {
 
 	public void deleteRoom(String name) throws IOException,
 			IsaacloudConnectionException {
+		Map<String, Object> params = new HashMap<>();
+		params.put("limit", "0");
 		SortedMap<String, String> query = new TreeMap<>();
 		query.put("name", name);
-		isaac.path("cache/segments").withQuery(query).get().getJson();
-		// query.replace("name", name + "_exit");
-		// isaac.path("cache/segments").withQuery(query).delete().getJson();
-		// query.replace("name", name + "_group");
-		// isaac.path("cache/segments").withQuery(query).delete().getJson();
+		// int segmentId = Integer.parseInt(((JSONObject) ((JSONArray) isaac
+		// .path("/cache/segments").withQuery(query).get().getJson())
+		// .get(0)).get("id").toString());
+		// isaac.path("/admin/segments/" + segmentId).delete();
+		// isaac.path("/admin/segments/" + (segmentId + 1)).delete();
+		// isaac.path("/admin/segments/" + (segmentId + 2)).delete();
+		JSONArray group = (JSONArray) isaac.path("/cache/users/groups")
+				.withQueryParameters(params).get().getJson();
+		for (int i = 0; i < group.size(); i++)
+			if (((JSONObject) group.get(i)).get("name").toString().equals(name))
+				isaac.path(
+						"/admin/users/groups/"
+								+ ((JSONObject) group.get(i)).get("id"))
+						.delete();
+
+		int nType = Integer.parseInt(((JSONObject) ((JSONArray) isaac
+				.path("/admin/notifications/types").withQuery(query).get()
+				.getJson()).get(0)).get("id").toString());
+		// isaac.path("/admin/segments/" + nType).delete();
+
+		JSONArray conditions = (JSONArray) isaac.path("/admin/conditions")
+				.withQueryParameters(params).get().getJson();
+		for (int i = 0; i < conditions.size(); i++)
+			if (((JSONObject) conditions.get(i)).get("name").toString()
+					.contains(name + "_visit"))
+				isaac.path(
+						"/admin/conditions/"
+								+ ((JSONObject) conditions.get(i)).get("id"))
+						.delete();
+			else if (((JSONObject) conditions.get(i)).get("name").toString()
+					.contains(name + "_exit_"))
+				isaac.path(
+						"/admin/conditions/"
+								+ ((JSONObject) conditions.get(i)).get("id"))
+						.delete();
+		System.out.println(conditions);
 	}
 
 }
