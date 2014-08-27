@@ -2,8 +2,6 @@ package controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import models.GoogleCalendarAPI;
 import models.IsaaCloudAPI;
@@ -16,18 +14,17 @@ import com.isaacloud.sdk.IsaacloudConnectionException;
 
 public class Application extends Controller {
 
+	// AVAILABLE IN v2
 	public static Result createCalendarNotification(String iB64, String cB64,
 			String name) {
 		GoogleCalendarAPI calendar = new GoogleCalendarAPI(cB64);
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("server", "getresults.isaacloud.com");
+
 		Channel request = new Channel()
-				.setId("1234567890987654321")
+				.setId("13cb26cr82yrcgb3uircbg23ir62b3rx7i612r7i162fbrx76")
 				.setType("web_hook")
 				.setAddress(
-						String.format("http://getresults.isaacloud.com:8080/deleteNotification"))
-				.setParams(params).set("isaaBase64", iB64)
-				.set("calendarBase64", cB64);
+						"http://getresults.isaacloud.com:8080/deleteNotification")
+				.set("isaaBase64", iB64).set("calendarBase64", cB64);
 		try {
 			calendar.service.events().watch(name, request).execute();
 		} catch (IOException e) {
@@ -54,7 +51,11 @@ public class Application extends Controller {
 		return ok("ok");
 	}
 
+	// //////////////////////////////////////////////////////////////////////////////////////////
+
 	public static Result meetingCheck() {
+		String roomLabel = "Meeting Room";
+
 		String userEmail = "" + request().body().asJson().get("data").asText();
 		String isaaBase64 = ""
 				+ request().body().asJson().get("isaaBase64").asText();
@@ -65,6 +66,31 @@ public class Application extends Controller {
 		if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
 				userEmail))
 			isaa.addPointsForAttendance(userEmail);
+
+		ArrayList<Users> usersList = calendar.soiCalendar.putUserEmails(
+				calendar.service, roomLabel);
+
+		int counter = 0, a = 0, b = 0;
+
+		for (int i = 0; i < usersList.size(); i++) {
+			isaa.putUserInfo(usersList, i);
+			if (usersList.get(i).userPlace.equals(roomLabel)) {
+				counter++;
+				if (counter == 1) {
+					a = i;
+				} else if (counter == 2) {
+					b = i;
+				} else if (counter == 3) {
+					isaa.addAchievementForPunktualMeeting(usersList.get(a).userEmail);
+					isaa.addAchievementForPunktualMeeting(usersList.get(b).userEmail);
+					isaa.addAchievementForPunktualMeeting(usersList.get(i).userEmail);
+					System.out.println(i);
+				} else if (counter > 3) {
+					isaa.addAchievementForPunktualMeeting(usersList.get(i).userEmail);
+					System.out.println(i);
+				}
+			}
+		}
 
 		return ok("ok");
 	}
@@ -100,4 +126,5 @@ public class Application extends Controller {
 		}
 		return ok("ok");
 	}
+
 }

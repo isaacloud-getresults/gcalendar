@@ -78,6 +78,25 @@ public class IsaaCloudAPI {
 		}
 	}
 
+	public void addAchievementForPunktualMeeting(String userEmail) {
+		JSONObject body = new JSONObject();
+		body.put("status", "punctual");
+
+		try {
+			SortedMap<String, String> query = new TreeMap<>();
+			query.put("email", userEmail);
+			JSONArray users = (JSONArray) isaac.path("/cache/users")
+					.withQuery(query).withFields("id").get().getJson();
+			if (!users.isEmpty()) {
+				int id = Integer.parseInt(((JSONObject) users.get(0)).get("id")
+						.toString());
+				isaac.event(id, "USER", "PRIORITY_NORMAL", 1, "NORMAL", body);
+			}
+		} catch (IOException e) {
+		} catch (IsaacloudConnectionException e) {
+		}
+	}
+
 	public void putUserInfo(ArrayList<Users> usersList, int idAL) {
 		try {
 			SortedMap<String, String> query = new TreeMap<>();
