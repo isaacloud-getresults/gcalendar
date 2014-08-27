@@ -90,7 +90,7 @@ public class Application extends Controller {
 			isaa.addAchievementForPunktualMeeting(usersList.get(b).userEmail);
 			isaa.addAchievementForPunktualMeeting(usersList.get(c).userEmail);
 		} else if (counter > 3) {
-			isaa.addAchievementForPunktualMeeting(usersList.get(c).userEmail);
+			isaa.addAchievementForPunktualMeeting(userEmail);
 		}
 
 		return ok("ok");
