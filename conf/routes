@@ -4,9 +4,11 @@
 
 # Home page
 
-GET		/deleteNotification			controllers.Application.deleteEvent()
+GET		/createCalendarNotification controllers.Application.createCalendarNotification(iB64 : String, cB64 : String, name : String)
 
-POST		/meetingNotification		controllers.Application.meetingCheck()
+POST	/deleteNotification			controllers.Application.deleteEvent()
+
+POST	/meetingNotification		controllers.Application.meetingCheck()
 
 GET		/meetingBoard				controllers.Application.meetingBoard(iB64 : String, cB64 : String, id : String)
 
