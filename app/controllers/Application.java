@@ -70,7 +70,7 @@ public class Application extends Controller {
 		ArrayList<Users> usersList = calendar.soiCalendar.putUserEmails(
 				calendar.service, roomLabel);
 
-		int counter = 0, a = 0, b = 0;
+		int counter = 0, a = 0, b = 0, c = 0;
 
 		for (int i = 0; i < usersList.size(); i++) {
 			isaa.putUserInfo(usersList, i);
@@ -80,16 +80,17 @@ public class Application extends Controller {
 					a = i;
 				} else if (counter == 2) {
 					b = i;
-				} else if (counter == 3) {
-					isaa.addAchievementForPunktualMeeting(usersList.get(a).userEmail);
-					isaa.addAchievementForPunktualMeeting(usersList.get(b).userEmail);
-					isaa.addAchievementForPunktualMeeting(usersList.get(i).userEmail);
-					System.out.println(i);
-				} else if (counter > 3) {
-					isaa.addAchievementForPunktualMeeting(usersList.get(i).userEmail);
-					System.out.println(i);
-				}
+				} else
+					c = i;
 			}
+		}
+
+		if (counter == 3) {
+			isaa.addAchievementForPunktualMeeting(usersList.get(a).userEmail);
+			isaa.addAchievementForPunktualMeeting(usersList.get(b).userEmail);
+			isaa.addAchievementForPunktualMeeting(usersList.get(c).userEmail);
+		} else if (counter > 3) {
+			isaa.addAchievementForPunktualMeeting(usersList.get(c).userEmail);
 		}
 
 		return ok("ok");
