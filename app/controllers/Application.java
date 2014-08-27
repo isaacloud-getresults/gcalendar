@@ -38,6 +38,7 @@ public class Application extends Controller {
 
 	// AVAILABLE IN v2
 	public static Result deleteEvent() {
+		System.out.println("test");
 		String isaaBase64 = ""
 				+ request().body().asJson().get("isaaBase64").asText();
 		String calendarBase64 = ""
@@ -54,8 +55,6 @@ public class Application extends Controller {
 	}
 
 	public static Result meetingCheck() {
-		System.out.println("test");
-
 		String userEmail = "" + request().body().asJson().get("data").asText();
 		String isaaBase64 = ""
 				+ request().body().asJson().get("isaaBase64").asText();
