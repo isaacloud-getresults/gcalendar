@@ -64,35 +64,36 @@ public class Application extends Controller {
 		IsaaCloudAPI isaa = new IsaaCloudAPI(isaaBase64);
 		GoogleCalendarAPI calendar = new GoogleCalendarAPI(calendarBase64);
 		if (calendar.soiCalendar.checkCalendarMeetings(calendar.service,
-				userEmail))
+				userEmail)) {
 			isaa.addPointsForAttendance(userEmail);
 
-		ArrayList<Users> usersList = calendar.soiCalendar.putUserEmails(
-				calendar.service, roomLabel);
+			ArrayList<Users> usersList = calendar.soiCalendar.putUserEmails(
+					calendar.service, roomLabel);
 
-		int counter = 0, a = 0, b = 0, c = 0;
+			int counter = 0, a = 0, b = 0, c = 0;
 
-		for (int i = 0; i < usersList.size(); i++) {
-			isaa.putUserInfo(usersList, i);
-			if (usersList.get(i).userPlace.equals(roomLabel)) {
-				counter++;
-				if (counter == 1) {
-					a = i;
-				} else if (counter == 2) {
-					b = i;
-				} else
-					c = i;
+			for (int i = 0; i < usersList.size(); i++) {
+				isaa.putUserInfo(usersList, i);
+				if (usersList.get(i).userPlace.equals(roomLabel)
+						&& usersList.get(i).time > 0) {
+					counter++;
+					if (counter == 1) {
+						a = i;
+					} else if (counter == 2) {
+						b = i;
+					} else
+						c = i;
+				}
+			}
+
+			if (counter == 3) {
+				isaa.addAchievementForPunktualMeeting(usersList.get(a).userEmail);
+				isaa.addAchievementForPunktualMeeting(usersList.get(b).userEmail);
+				isaa.addAchievementForPunktualMeeting(usersList.get(c).userEmail);
+			} else if (counter > 3) {
+				isaa.addAchievementForPunktualMeeting(userEmail);
 			}
 		}
-
-		if (counter == 3) {
-			isaa.addAchievementForPunktualMeeting(usersList.get(a).userEmail);
-			isaa.addAchievementForPunktualMeeting(usersList.get(b).userEmail);
-			isaa.addAchievementForPunktualMeeting(usersList.get(c).userEmail);
-		} else if (counter > 3) {
-			isaa.addAchievementForPunktualMeeting(userEmail);
-		}
-
 		return ok("ok");
 	}
 
