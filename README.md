@@ -9,6 +9,7 @@ The library compiles on **Java version 1.7** and **Scala version 2.11.2**
 ## How to run it
 
 To run this application on server you should:
+
 1. Clone the repository:
 
 	```
