@@ -1,4 +1,9 @@
-This is your new Play application
+GOOGLE CALENDAR API
 =================================
 
-This file will be packaged with your application, when using `activator dist`.
+To run this application on server you should:
+1. Dowload it form github git pull origin master
+2. Run play framework activator
+3. Run application start -Dhttp.address=0.0.0.0 -Dhttp.port=8080
+You should use your server IP address.
+
