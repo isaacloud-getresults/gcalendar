@@ -152,29 +152,33 @@ public class IsaaCloudAPI {
 			IsaacloudConnectionException {
 		Map<String, Object> params = new HashMap<>();
 		params.put("limit", "0");
-		SortedMap<String, String> query = new TreeMap<>();
-		query.put("name", name);
-		if (!((JSONArray) isaac.path("/cache/segments").withQuery(query).get()
-				.getJson()).isEmpty()) {
-			int segmentId = Integer.parseInt(((JSONObject) ((JSONArray) isaac
-					.path("/cache/segments").withQuery(query).get().getJson())
-					.get(0)).get("id").toString());
-			isaac.path("/admin/segments/" + segmentId).delete();
-			isaac.path("/admin/segments/" + (segmentId + 1)).delete();
-			isaac.path("/admin/segments/" + (segmentId + 2)).delete();
-		}
 
-		if (!((JSONArray) isaac.path("/admin/notifications/types")
-				.withQuery(query).get().getJson()).isEmpty()) {
-			int nType = Integer.parseInt(((JSONObject) ((JSONArray) isaac
-					.path("/admin/notifications/types").withQuery(query).get()
-					.getJson()).get(0)).get("id").toString());
-			isaac.path("/admin/notifications/types/" + nType).delete();
-		}
+		JSONArray segment = (JSONArray) isaac.path("/cache/segments")
+				.withQueryParameters(params).get().getJson();
+		for (int i = 0; i < segment.size(); i++)
+			if (((JSONObject) segment.get(i)).get("name").equals(name)) {
+				int segmentId = Integer.parseInt(((JSONObject) segment.get(i))
+						.get("id").toString());
+				isaac.path("/admin/segments/" + segmentId).delete();
+				isaac.path("/admin/segments/" + (segmentId + 1)).delete();
+				isaac.path("/admin/segments/" + (segmentId + 2)).delete();
+			}
+
+		JSONArray notificationTypes = (JSONArray) isaac
+				.path("/admin/notifications/types").withQueryParameters(params)
+				.get().getJson();
+		for (int i = 0; i < notificationTypes.size(); i++)
+			if (((JSONObject) notificationTypes.get(i)).get("name").toString()
+					.equals(name))
+				isaac.path(
+						"/admin/notifications/types/"
+								+ ((JSONObject) notificationTypes.get(i))
+										.get("id")).delete();
 
 		JSONArray conditions = (JSONArray) isaac.path("/admin/conditions")
 				.withQueryParameters(params).get().getJson();
-		for (int i = 0; i < conditions.size(); i++)
+
+		for (int i = 0; i < conditions.size(); i++) {
 			if (((JSONObject) conditions.get(i)).get("name").toString()
 					.contains(name + "_visit"))
 				isaac.path(
@@ -187,7 +191,7 @@ public class IsaaCloudAPI {
 						"/admin/conditions/"
 								+ ((JSONObject) conditions.get(i)).get("id"))
 						.delete();
-
+		}
 		JSONArray counters = (JSONArray) isaac.path("/cache/counters")
 				.withQueryParameters(params).get().getJson();
 		for (int i = 0; i < counters.size(); i++)
@@ -212,25 +216,46 @@ public class IsaaCloudAPI {
 
 		JSONArray games = (JSONArray) isaac.path("/cache/games")
 				.withQueryParameters(params).get().getJson();
-		for (int i = 0; i < games.size(); i++)
+		for (int i = 0; i < games.size(); i++) {
 			if (((JSONObject) games.get(i)).get("name").toString()
-					.contains(name + "_exit_"))
+					.contains(name + "_exit_")) {
 				isaac.path(
 						"/admin/games/" + ((JSONObject) games.get(i)).get("id"))
 						.delete();
-			else if (((JSONObject) games.get(i)).get("name").toString()
+				// for (int j = 0; j < ((JSONArray) ((JSONObject) games.get(i))
+				// .get("notifications")).size(); j++) {
+				// isaac.path(
+				// "/admin/notifications/"
+				// + ((JSONArray) ((JSONObject) games.get(i))
+				// .get("notifications")).get(j))
+				// .delete();
+				// }
+			} else if (((JSONObject) games.get(i)).get("name").toString()
 					.contains(name + "_visit_")) {
-				for (int j = 0; j < ((JSONArray) ((JSONObject) games.get(i))
-						.get("notifications")).size(); j++)
-					isaac.path(
-							"/admin/notifications/"
-									+ ((JSONArray) ((JSONObject) games.get(i))
-											.get("notifications")).get(j))
-							.delete();
 				isaac.path(
 						"/admin/games/" + ((JSONObject) games.get(i)).get("id"))
 						.delete();
+				// for (int j = 0; j < ((JSONArray) ((JSONObject) games.get(i))
+				// .get("notifications")).size(); j++) {
+				// isaac.path(
+				// "/admin/notifications/"
+				// + ((JSONArray) ((JSONObject) games.get(i))
+				// .get("notifications")).get(j))
+				// .delete();
+				// }
 			}
+		}
+
+		JSONArray notification = (JSONArray) isaac.path("/admin/notifications")
+				.withQueryParameters(params).get().getJson();
+		for (int i = 0; i < notification.size(); i++) {
+			if (((JSONArray) ((JSONObject) notification.get(i)).get("game"))
+					.isEmpty())
+				isaac.path(
+						"/admin/notifications/"
+								+ ((JSONObject) notification.get(i)).get("id"))
+						.delete();
+		}
 
 		JSONArray group = (JSONArray) isaac.path("/cache/users/groups")
 				.withQueryParameters(params).get().getJson();
