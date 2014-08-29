@@ -12,7 +12,7 @@ To run this application on server you should:
 1. Clone the repository:
 
     
-    	git clone https://github.com/isaacloud-getresults/gcalendar.git
+	git clone https://github.com/isaacloud-getresults/gcalendar.git
     
 
 2. Enter the directory:
