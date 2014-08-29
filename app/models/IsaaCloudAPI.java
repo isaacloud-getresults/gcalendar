@@ -164,15 +164,6 @@ public class IsaaCloudAPI {
 			isaac.path("/admin/segments/" + (segmentId + 2)).delete();
 		}
 
-		JSONArray group = (JSONArray) isaac.path("/cache/users/groups")
-				.withQueryParameters(params).get().getJson();
-		for (int i = 0; i < group.size(); i++)
-			if (((JSONObject) group.get(i)).get("name").toString().equals(name))
-				isaac.path(
-						"/admin/users/groups/"
-								+ ((JSONObject) group.get(i)).get("id"))
-						.delete();
-
 		if (!((JSONArray) isaac.path("/admin/notifications/types")
 				.withQuery(query).get().getJson()).isEmpty()) {
 			int nType = Integer.parseInt(((JSONObject) ((JSONArray) isaac
@@ -240,5 +231,14 @@ public class IsaaCloudAPI {
 						"/admin/games/" + ((JSONObject) games.get(i)).get("id"))
 						.delete();
 			}
+
+		JSONArray group = (JSONArray) isaac.path("/cache/users/groups")
+				.withQueryParameters(params).get().getJson();
+		for (int i = 0; i < group.size(); i++)
+			if (((JSONObject) group.get(i)).get("name").toString().equals(name))
+				isaac.path(
+						"/admin/users/groups/"
+								+ ((JSONObject) group.get(i)).get("id"))
+						.delete();
 	}
 }

@@ -11,10 +11,10 @@ The library compiles on **Java version 1.7** and **Scala version 2.11.2**
 To run this application on server you should:
 1. Dowload it form github 
 
-    ```
-    git clone https://github.com/isaacloud-getresults/gcalendar.git
-    ```
-    
+	```
+	git clone https://github.com/isaacloud-getresults/gcalendar.git
+	```
+
 2. Enter the directory:
 
 	```
