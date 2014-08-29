@@ -126,7 +126,7 @@ public class Application extends Controller {
 		} catch (IOException e) {
 		} catch (IsaacloudConnectionException e) {
 		}
-		return ok("ok");
+		return ok();
 	}
 
 }
